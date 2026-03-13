@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>WhatsApp Bulk Sender</title>
+</head>
+<body>
+<h3>WhatsApp Bulk Message</h3>
+
+<textarea id="numbers" rows="10" placeholder="Numbers here"></textarea><br><br>
+<textarea id="msg" rows="4" placeholder="Message here"></textarea><br><br>
+
+<label>Delay (seconds):</label>
+<input type="number" id="delay" value="5"><br><br>
+
+<button onclick="start()">Start</button>
+
+<script>
+function start(){
+  let nums = document.getElementById("numbers").value.trim().split("\n");
+  let msg = encodeURIComponent(document.getElementById("msg").value);
+  let delay = document.getElementById("delay").value * 1000;
+
+  nums.forEach((num, i)=>{
+    setTimeout(()=>{
+      window.open(`https://wa.me/92${num.substring(1)}?text=${msg}`, "_blank");
+    }, i * delay);
+  });
+}
+</script>
+</body>
+</html>
