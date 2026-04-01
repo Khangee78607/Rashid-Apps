@@ -1,2 +1,0 @@
-# Rashid-Apps
-Apps
