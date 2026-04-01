@@ -37,10 +37,12 @@ to{opacity:1;}
 /* Card */
 .card{
 z-index:2;
-background:rgba(0,0,0,0.7);
+background:rgba(0,0,0,0.75);
 padding:30px;
 border-radius:20px;
 box-shadow:0 0 25px gold;
+width:90%;
+max-width:400px;
 }
 
 h1{
@@ -88,6 +90,15 @@ left:0;
 pointer-events:none;
 z-index:1;
 }
+
+.photo{
+width:160px;
+height:160px;
+border-radius:50%;
+border:4px solid gold;
+box-shadow:0 0 20px gold;
+margin-top:20px;
+}
 </style>
 </head>
 
@@ -95,10 +106,13 @@ z-index:1;
 
 <div class="card">
 <h1>💖 Asma 💖</h1>
+
 <div class="counter" id="loveCounter"></div>
+
 <p style="margin-top:10px;color:white;">
 14 February 2021 Se Sirf Ap Mery Sat Happy Hu Or Any Waly Kafi Zada 14 February Sat Guzarna Chanty Hu ❤️
 </p>
+
 <button id="yes" onclick="startCelebration()">Yes 💍</button>
 <button id="no" onmouseover="moveNo()">No 😜</button>
 </div>
@@ -106,7 +120,8 @@ z-index:1;
 <canvas id="canvas"></canvas>
 
 <script>
-// Stars generate
+
+/* Generate Stars */
 for(let i=0;i<150;i++){
 let star=document.createElement("div");
 star.className="star";
@@ -116,7 +131,7 @@ star.style.animationDuration=(Math.random()*3+1)+"s";
 document.body.appendChild(star);
 }
 
-// Love Counter
+/* Live Love Counter */
 const startDate=new Date("February 14, 2021 00:00:00");
 
 function updateLoveTime(){
@@ -126,8 +141,15 @@ let years=now.getFullYear()-startDate.getFullYear();
 let months=now.getMonth()-startDate.getMonth();
 let days=now.getDate()-startDate.getDate();
 
-if(days<0){months--;days+=new Date(now.getFullYear(),now.getMonth(),0).getDate();}
-if(months<0){years--;months+=12;}
+if(days<0){
+months--;
+days+=new Date(now.getFullYear(),now.getMonth(),0).getDate();
+}
+
+if(months<0){
+years--;
+months+=12;
+}
 
 const diff=now-startDate;
 const hours=Math.floor((diff/(1000*60*60))%24);
@@ -138,17 +160,18 @@ document.getElementById("loveCounter").innerHTML=
 `${years}Y : ${months}M : ${days}D <br>
 ${hours}H : ${minutes}M : ${seconds}S`;
 }
+
 setInterval(updateLoveTime,1000);
 updateLoveTime();
 
-// No Button Move
+/* No Button Move */
 function moveNo(){
 let btn=document.getElementById("no");
 btn.style.left=Math.random()*300+"px";
 btn.style.top=Math.random()*300+"px";
 }
 
-// Fireworks
+/* Fireworks */
 const canvas=document.getElementById("canvas");
 const ctx=canvas.getContext("2d");
 canvas.width=window.innerWidth;
@@ -169,24 +192,40 @@ speed:Math.random()*6+2
 function animate(){
 ctx.fillStyle="rgba(0,0,0,0.2)";
 ctx.fillRect(0,0,canvas.width,canvas.height);
+
 particles.forEach((p,i)=>{
 p.x+=Math.cos(p.angle)*p.speed;
 p.y+=Math.sin(p.angle)*p.speed;
 p.speed*=0.95;
+
 ctx.beginPath();
 ctx.arc(p.x,p.y,2,0,2*Math.PI);
 ctx.fillStyle="gold";
 ctx.fill();
+
 if(p.speed<0.5)particles.splice(i,1);
 });
+
 requestAnimationFrame(animate);
 }
 animate();
 
+/* YES Celebration */
 function startCelebration(){
-document.querySelector(".card").innerHTML="<h1 style='color:gold;'>She Said YES 💍✨</h1>";
+document.querySelector(".card").innerHTML=`
+<h1 style="color:gold;">💍 She Said YES 💍</h1>
+
+<img src="asma.jpg" class="photo">
+
+<p style="margin-top:20px;color:white;font-size:18px;text-shadow:0 0 10px gold;">
+💖 Asma & Rashid 💖 <br>
+Aap dono hamesha isi tarah saath raho ✨🌹
+</p>
+`;
+
 setInterval(createFirework,800);
 }
+
 </script>
 
 </body>
