@@ -7,7 +7,6 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Courier New',monospace;}
-
 body{
 height:100vh;
 display:flex;
@@ -28,11 +27,7 @@ height:2px;
 background:white;
 animation:twinkle 2s infinite alternate;
 }
-
-@keyframes twinkle{
-from{opacity:0.2;}
-to{opacity:1;}
-}
+@keyframes twinkle{from{opacity:0.2;}to{opacity:1;}}
 
 /* Card */
 .card{
@@ -43,6 +38,7 @@ border-radius:20px;
 box-shadow:0 0 25px gold;
 width:90%;
 max-width:400px;
+position:relative;
 }
 
 h1{
@@ -50,14 +46,7 @@ font-size:22px;
 margin-bottom:15px;
 animation:heartbeat 1.2s infinite;
 }
-
-@keyframes heartbeat{
-0%{transform:scale(1);}
-25%{transform:scale(1.1);}
-50%{transform:scale(1);}
-75%{transform:scale(1.1);}
-100%{transform:scale(1);}
-}
+@keyframes heartbeat{0%{transform:scale(1);}25%{transform:scale(1.1);}50%{transform:scale(1);}75%{transform:scale(1.1);}100%{transform:scale(1);}}
 
 .counter{
 font-size:18px;
@@ -65,11 +54,7 @@ line-height:1.6;
 text-shadow:0 0 10px gold,0 0 20px orange;
 animation:glow 1.5s infinite alternate;
 }
-
-@keyframes glow{
-from{text-shadow:0 0 5px gold;}
-to{text-shadow:0 0 20px orange;}
-}
+@keyframes glow{from{text-shadow:0 0 5px gold;}to{text-shadow:0 0 20px orange;}}
 
 button{
 padding:8px 20px;
@@ -78,8 +63,9 @@ border:none;
 border-radius:20px;
 cursor:pointer;
 font-size:14px;
+position:relative;
+z-index:3;
 }
-
 #yes{background:gold;color:black;}
 #no{background:white;color:black;position:absolute;}
 
@@ -99,6 +85,22 @@ border:4px solid gold;
 box-shadow:0 0 20px gold;
 margin-top:20px;
 }
+
+/* Typing effect */
+.message{
+color:white;
+font-size:18px;
+text-shadow:0 0 10px gold;
+white-space:pre-wrap;
+}
+
+/* Floating hearts */
+.heart{
+position:absolute;
+font-size:20px;
+animation:floatHeart 1.5s forwards;
+}
+@keyframes floatHeart{0%{opacity:1;transform:translateY(0);}100%{opacity:0;transform:translateY(-80px) scale(1.5);}}
 </style>
 </head>
 
@@ -108,6 +110,7 @@ margin-top:20px;
 <h1>💖 Asma 💖</h1>
 
 <div class="counter" id="loveCounter"></div>
+<div class="counter" id="nextValentine" style="margin-top:5px;"></div>
 
 <p style="margin-top:10px;color:white;">
 14 February 2021 Se Sirf Ap Mery Sat Happy Hu Or Any Waly Kafi Zada 14 February Sat Guzarna Chanty Hu ❤️
@@ -118,6 +121,11 @@ margin-top:20px;
 </div>
 
 <canvas id="canvas"></canvas>
+
+<!-- Background Music -->
+<audio id="bgMusic" autoplay loop>
+  <source src="romantic.mp3.mp3" type="audio/mp3">
+</audio>
 
 <script>
 
@@ -160,9 +168,32 @@ document.getElementById("loveCounter").innerHTML=
 `${years}Y : ${months}M : ${days}D <br>
 ${hours}H : ${minutes}M : ${seconds}S`;
 }
-
 setInterval(updateLoveTime,1000);
 updateLoveTime();
+
+/* Next Valentine's Day Countdown */
+const nextValentine=new Date(`February 14, ${new Date().getFullYear()} 00:00:00`);
+
+function updateNextValentine(){
+  let now=new Date();
+  let year=now.getFullYear();
+  if(now > new Date(`February 14, ${year} 00:00:00`)){
+    year += 1;
+  }
+  nextValentine.setFullYear(year);
+
+  let diff=nextValentine - now;
+
+  let days=Math.floor(diff/(1000*60*60*24));
+  let hours=Math.floor((diff/(1000*60*60))%24);
+  let minutes=Math.floor((diff/(1000*60))%60);
+  let seconds=Math.floor((diff/1000)%60);
+
+  document.getElementById("nextValentine").innerHTML=
+  `Next Valentine's Day: ${days}D : ${hours}H : ${minutes}M : ${seconds}S`;
+}
+setInterval(updateNextValentine,1000);
+updateNextValentine();
 
 /* No Button Move */
 function moveNo(){
@@ -171,7 +202,7 @@ btn.style.left=Math.random()*300+"px";
 btn.style.top=Math.random()*300+"px";
 }
 
-/* Fireworks */
+/* Fireworks + Hearts + Confetti */
 const canvas=document.getElementById("canvas");
 const ctx=canvas.getContext("2d");
 canvas.width=window.innerWidth;
@@ -179,12 +210,34 @@ canvas.height=window.innerHeight;
 let particles=[];
 
 function createFirework(){
-for(let i=0;i<100;i++){
+for(let i=0;i<50;i++){
 particles.push({
 x:canvas.width/2,
 y:canvas.height/2,
 angle:Math.random()*2*Math.PI,
-speed:Math.random()*6+2
+speed:Math.random()*6+2,
+color:"gold",
+type:"firework"
+});
+}
+for(let i=0;i<20;i++){
+particles.push({
+x:canvas.width/2,
+y:canvas.height/2,
+angle:Math.random()*2*Math.PI,
+speed:Math.random()*2+1,
+color:"pink",
+type:"heart"
+});
+}
+for(let i=0;i<30;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:0,
+angle:Math.random()*2*Math.PI,
+speed:Math.random()*3+2,
+color:["red","blue","green","yellow","orange"][Math.floor(Math.random()*5)],
+type:"confetti"
 });
 }
 }
@@ -199,8 +252,8 @@ p.y+=Math.sin(p.angle)*p.speed;
 p.speed*=0.95;
 
 ctx.beginPath();
-ctx.arc(p.x,p.y,2,0,2*Math.PI);
-ctx.fillStyle="gold";
+ctx.arc(p.x,p.y,p.type==="confetti"?3:2,0,2*Math.PI);
+ctx.fillStyle=p.color;
 ctx.fill();
 
 if(p.speed<0.5)particles.splice(i,1);
@@ -210,20 +263,43 @@ requestAnimationFrame(animate);
 }
 animate();
 
+/* Floating heart on click */
+function floatHeart(){
+const heart=document.createElement("div");
+heart.className="heart";
+heart.style.left=(canvas.width/2 + (Math.random()*100-50))+"px";
+heart.style.top=(canvas.height/2 + 50)+"px";
+heart.innerHTML="💖";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),1500);
+}
+
+/* Typing Text */
+function typeMessage(text,container){
+let i=0;
+container.innerHTML="";
+function typing(){
+if(i<text.length){
+container.innerHTML+=text.charAt(i);
+i++;
+setTimeout(typing,50);
+}}
+typing();
+}
+
 /* YES Celebration */
 function startCelebration(){
 document.querySelector(".card").innerHTML=`
 <h1 style="color:gold;">💍 She Said YES 💍</h1>
-
-<img src="./asma.jpg.jpeg" class="photo">
-
-<p style="margin-top:20px;color:white;font-size:18px;text-shadow:0 0 10px gold;">
-💖 Asma & Rashid 💖 <br>
-Aap dono hamesha isi tarah saath raho ✨🌹
-</p>
+<img src=",/asma.jpg.jpeg" class="photo">
+<p class="message"></p>
 `;
 
-setInterval(createFirework,800);
+const msgContainer=document.querySelector(".message");
+typeMessage("💖 Asma & Rashid 💖\nAap dono hamesha isi tarah saath raho ✨🌹", msgContainer);
+
+// Fireworks + hearts + confetti every 0.8s
+setInterval(()=>{createFirework(); floatHeart();},800);
 }
 
 </script>
