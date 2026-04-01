@@ -3,110 +3,84 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Asma ❤️</title>
+<title>Asma ❤️</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Courier New',monospace;}
 
 body{
 height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-background:linear-gradient(135deg,#ff758c,#ff7eb3);
+flex-direction:column;
+background:black;
 overflow:hidden;
-color:white;
+color:#ffd700;
 text-align:center;
 }
 
-/* Glass Card */
+/* Stars */
+.star{
+position:absolute;
+width:2px;
+height:2px;
+background:white;
+animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+from{opacity:0.2;}
+to{opacity:1;}
+}
+
+/* Card */
 .card{
-background:rgba(255,255,255,0.15);
-backdrop-filter:blur(15px);
-padding:30px;
-border-radius:25px;
-width:90%;
-max-width:400px;
-box-shadow:0 0 30px rgba(0,0,0,0.2);
-position:relative;
 z-index:2;
+background:rgba(0,0,0,0.7);
+padding:30px;
+border-radius:20px;
+box-shadow:0 0 25px gold;
 }
 
-h1{font-size:24px;margin-bottom:15px;}
-p{font-size:16px;margin-bottom:20px;}
+h1{
+font-size:22px;
+margin-bottom:15px;
+animation:heartbeat 1.2s infinite;
+}
 
-/* Buttons */
+@keyframes heartbeat{
+0%{transform:scale(1);}
+25%{transform:scale(1.1);}
+50%{transform:scale(1);}
+75%{transform:scale(1.1);}
+100%{transform:scale(1);}
+}
+
+.counter{
+font-size:18px;
+line-height:1.6;
+text-shadow:0 0 10px gold,0 0 20px orange;
+animation:glow 1.5s infinite alternate;
+}
+
+@keyframes glow{
+from{text-shadow:0 0 5px gold;}
+to{text-shadow:0 0 20px orange;}
+}
+
 button{
-padding:10px 25px;
+padding:8px 20px;
+margin-top:15px;
 border:none;
-border-radius:25px;
-font-size:16px;
+border-radius:20px;
 cursor:pointer;
-margin:5px;
-transition:0.3s;
+font-size:14px;
 }
 
-#yes{background:white;color:#ff4e8a;}
-#no{background:black;color:white;position:absolute;}
+#yes{background:gold;color:black;}
+#no{background:white;color:black;position:absolute;}
 
-button:hover{transform:scale(1.1);}
-
-/* Ring Box */
-.ring-box{
-width:120px;
-height:80px;
-background:#b8860b;
-margin:20px auto;
-border-radius:10px;
-position:relative;
-cursor:pointer;
-transition:0.5s;
-}
-
-.lid{
-width:120px;
-height:40px;
-background:#d4af37;
-position:absolute;
-top:0;
-left:0;
-border-radius:10px 10px 0 0;
-transform-origin:top;
-transition:0.7s;
-}
-
-.ring{
-position:absolute;
-top:30px;
-left:50%;
-transform:translateX(-50%);
-font-size:30px;
-opacity:0;
-transition:0.7s;
-}
-
-.open .lid{
-transform:rotateX(150deg);
-}
-
-.open .ring{
-opacity:1;
-}
-
-/* Roses */
-.rose{
-position:absolute;
-top:-50px;
-font-size:20px;
-animation:fall 6s linear infinite;
-}
-
-@keyframes fall{
-0%{transform:translateY(-10vh);}
-100%{transform:translateY(110vh);}
-}
-
-/* Canvas */
 canvas{
 position:fixed;
 top:0;
@@ -120,44 +94,59 @@ z-index:1;
 <body>
 
 <div class="card">
-<h1>Asma ❤️</h1>
-<p>Tum meri zindagi ki sabse khoobsurat dua ho.  
-Kya tum meri hamesha ke liye banogi? 💍</p>
-
-<div class="ring-box" onclick="openRing()" id="ringBox">
-<div class="lid"></div>
-<div class="ring">💍</div>
-</div>
-
-<button id="yes" onclick="startCelebration()">Yes 💖</button>
+<h1>💖 Asma 💖</h1>
+<div class="counter" id="loveCounter"></div>
+<p style="margin-top:10px;color:white;">
+14 February 2021 Se Sirf Ap Mery Sat Happy Hu Or Any Waly Kafi Zada 14 February Sat Guzarna Chanty Hu ❤️
+</p>
+<button id="yes" onclick="startCelebration()">Yes 💍</button>
 <button id="no" onmouseover="moveNo()">No 😜</button>
 </div>
 
 <canvas id="canvas"></canvas>
 
 <script>
-// No button run
+// Stars generate
+for(let i=0;i<150;i++){
+let star=document.createElement("div");
+star.className="star";
+star.style.top=Math.random()*100+"vh";
+star.style.left=Math.random()*100+"vw";
+star.style.animationDuration=(Math.random()*3+1)+"s";
+document.body.appendChild(star);
+}
+
+// Love Counter
+const startDate=new Date("February 14, 2021 00:00:00");
+
+function updateLoveTime(){
+const now=new Date();
+
+let years=now.getFullYear()-startDate.getFullYear();
+let months=now.getMonth()-startDate.getMonth();
+let days=now.getDate()-startDate.getDate();
+
+if(days<0){months--;days+=new Date(now.getFullYear(),now.getMonth(),0).getDate();}
+if(months<0){years--;months+=12;}
+
+const diff=now-startDate;
+const hours=Math.floor((diff/(1000*60*60))%24);
+const minutes=Math.floor((diff/(1000*60))%60);
+const seconds=Math.floor((diff/1000)%60);
+
+document.getElementById("loveCounter").innerHTML=
+`${years}Y : ${months}M : ${days}D <br>
+${hours}H : ${minutes}M : ${seconds}S`;
+}
+setInterval(updateLoveTime,1000);
+updateLoveTime();
+
+// No Button Move
 function moveNo(){
 let btn=document.getElementById("no");
-btn.style.left=Math.random()*200+"px";
-btn.style.top=Math.random()*200+"px";
+btn.style.left=Math.random()*300+"px";
+btn.style.top=Math.random()*300+"px";
 }
-
-// Ring open
-function openRing(){
-document.getElementById("ringBox").classList.toggle("open");
-}
-
-// Roses falling
-setInterval(()=>{
-let rose=document.createElement("div");
-rose.className="rose";
-rose.innerHTML="🌹";
-rose.style.left=Math.random()*100+"vw";
-rose.style.fontSize=(Math.random()*20+15)+"px";
-document.body.appendChild(rose);
-setTimeout(()=>rose.remove(),6000);
-},400);
 
 // Fireworks
 const canvas=document.getElementById("canvas");
@@ -167,26 +156,26 @@ canvas.height=window.innerHeight;
 let particles=[];
 
 function createFirework(){
-for(let i=0;i<80;i++){
+for(let i=0;i<100;i++){
 particles.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height/2,
+x:canvas.width/2,
+y:canvas.height/2,
 angle:Math.random()*2*Math.PI,
-speed:Math.random()*5+2
+speed:Math.random()*6+2
 });
 }
 }
 
 function animate(){
-ctx.fillStyle="rgba(0,0,0,0.1)";
+ctx.fillStyle="rgba(0,0,0,0.2)";
 ctx.fillRect(0,0,canvas.width,canvas.height);
 particles.forEach((p,i)=>{
 p.x+=Math.cos(p.angle)*p.speed;
 p.y+=Math.sin(p.angle)*p.speed;
-p.speed*=0.96;
+p.speed*=0.95;
 ctx.beginPath();
 ctx.arc(p.x,p.y,2,0,2*Math.PI);
-ctx.fillStyle="hsl("+Math.random()*360+",100%,60%)";
+ctx.fillStyle="gold";
 ctx.fill();
 if(p.speed<0.5)particles.splice(i,1);
 });
@@ -195,8 +184,8 @@ requestAnimationFrame(animate);
 animate();
 
 function startCelebration(){
-document.querySelector(".card").innerHTML="<h1>Yayyyy ❤️ Asma said YES! 💍🎆</h1>";
-setInterval(createFirework,700);
+document.querySelector(".card").innerHTML="<h1 style='color:gold;'>She Said YES 💍✨</h1>";
+setInterval(createFirework,800);
 }
 </script>
 
