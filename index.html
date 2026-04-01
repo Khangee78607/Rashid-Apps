@@ -3,77 +3,200 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login</title>
+<title>For Asma ❤️</title>
+
 <style>
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display:flex; justify-content:center; align-items:center; height:100vh; background:#f0f2f5; margin:0; }
-.card { background:#fff; padding:40px; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.1); width:100%; max-width:400px; text-align:center; }
-input { width:100%; padding:12px; margin:10px 0; border-radius:8px; border:1px solid #ccc; outline:none; font-size:16px; }
-input:focus { border-color:#007bff; box-shadow:0 0 5px rgba(0,123,255,0.3); }
-button { width:100%; padding:12px; margin-top:20px; border:none; border-radius:8px; background:#007bff; color:white; font-size:16px; cursor:pointer; }
-button:hover { background:#0056b3; }
-.message { margin-top:15px; color:red; font-weight:bold; }
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ff758c,#ff7eb3);
+overflow:hidden;
+color:white;
+text-align:center;
+}
+
+/* Glass Card */
+.card{
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(15px);
+padding:30px;
+border-radius:25px;
+width:90%;
+max-width:400px;
+box-shadow:0 0 30px rgba(0,0,0,0.2);
+position:relative;
+z-index:2;
+}
+
+h1{font-size:24px;margin-bottom:15px;}
+p{font-size:16px;margin-bottom:20px;}
+
+/* Buttons */
+button{
+padding:10px 25px;
+border:none;
+border-radius:25px;
+font-size:16px;
+cursor:pointer;
+margin:5px;
+transition:0.3s;
+}
+
+#yes{background:white;color:#ff4e8a;}
+#no{background:black;color:white;position:absolute;}
+
+button:hover{transform:scale(1.1);}
+
+/* Ring Box */
+.ring-box{
+width:120px;
+height:80px;
+background:#b8860b;
+margin:20px auto;
+border-radius:10px;
+position:relative;
+cursor:pointer;
+transition:0.5s;
+}
+
+.lid{
+width:120px;
+height:40px;
+background:#d4af37;
+position:absolute;
+top:0;
+left:0;
+border-radius:10px 10px 0 0;
+transform-origin:top;
+transition:0.7s;
+}
+
+.ring{
+position:absolute;
+top:30px;
+left:50%;
+transform:translateX(-50%);
+font-size:30px;
+opacity:0;
+transition:0.7s;
+}
+
+.open .lid{
+transform:rotateX(150deg);
+}
+
+.open .ring{
+opacity:1;
+}
+
+/* Roses */
+.rose{
+position:absolute;
+top:-50px;
+font-size:20px;
+animation:fall 6s linear infinite;
+}
+
+@keyframes fall{
+0%{transform:translateY(-10vh);}
+100%{transform:translateY(110vh);}
+}
+
+/* Canvas */
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+z-index:1;
+}
 </style>
 </head>
+
 <body>
 
 <div class="card">
-    <h2>Login</h2>
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-    <div class="message" id="message"></div>
+<h1>Asma ❤️</h1>
+<p>Tum meri zindagi ki sabse khoobsurat dua ho.  
+Kya tum meri hamesha ke liye banogi? 💍</p>
+
+<div class="ring-box" onclick="openRing()" id="ringBox">
+<div class="lid"></div>
+<div class="ring">💍</div>
 </div>
 
-<!-- Firebase -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-app.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-firestore.js";
+<button id="yes" onclick="startCelebration()">Yes 💖</button>
+<button id="no" onmouseover="moveNo()">No 😜</button>
+</div>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDKOzg-bivUIWgug9M_-Gb_48huqfsth08",
-  authDomain: "rashid-app-28ee9.firebaseapp.com",
-  projectId: "rashid-app-28ee9",
-  storageBucket: "rashid-app-28ee9.appspot.com",
-  messagingSenderId: "839037586224",
-  appId: "1:839037586224:web:fba3d0368621ad9fb156f5",
-  measurementId: "G-8MP3RC225Y"
-};
+<canvas id="canvas"></canvas>
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+<script>
+// No button run
+function moveNo(){
+let btn=document.getElementById("no");
+btn.style.left=Math.random()*200+"px";
+btn.style.top=Math.random()*200+"px";
+}
 
-window.db = db; // Global
+// Ring open
+function openRing(){
+document.getElementById("ringBox").classList.toggle("open");
+}
 
-async function login(){
-    let user = document.getElementById("username").value.trim();
-    let pass = document.getElementById("password").value.trim();
-    let msg = document.getElementById("message");
+// Roses falling
+setInterval(()=>{
+let rose=document.createElement("div");
+rose.className="rose";
+rose.innerHTML="🌹";
+rose.style.left=Math.random()*100+"vw";
+rose.style.fontSize=(Math.random()*20+15)+"px";
+document.body.appendChild(rose);
+setTimeout(()=>rose.remove(),6000);
+},400);
 
-    // Admin login
-    if(user==="rashid" && pass==="1122"){
-        localStorage.setItem("admin","true");
-        window.location="dashboard.html";
-        return;
-    }
+// Fireworks
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+let particles=[];
 
-    // Normal user login
-    const userDoc = await getDoc(doc(db,"users",user));
-    if(!userDoc.exists()){
-        msg.textContent="Username not found!";
-        return;
-    }
-    const data = userDoc.data();
-    if(data.password !== pass){
-        msg.textContent="Password incorrect!";
-        return;
-    }
-    if(!data.access){
-        msg.textContent="Access not granted by Admin!";
-        return;
-    }
+function createFirework(){
+for(let i=0;i<80;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height/2,
+angle:Math.random()*2*Math.PI,
+speed:Math.random()*5+2
+});
+}
+}
 
-    localStorage.setItem("user", user);
-    window.location="user_dashboard.html";
+function animate(){
+ctx.fillStyle="rgba(0,0,0,0.1)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+particles.forEach((p,i)=>{
+p.x+=Math.cos(p.angle)*p.speed;
+p.y+=Math.sin(p.angle)*p.speed;
+p.speed*=0.96;
+ctx.beginPath();
+ctx.arc(p.x,p.y,2,0,2*Math.PI);
+ctx.fillStyle="hsl("+Math.random()*360+",100%,60%)";
+ctx.fill();
+if(p.speed<0.5)particles.splice(i,1);
+});
+requestAnimationFrame(animate);
+}
+animate();
+
+function startCelebration(){
+document.querySelector(".card").innerHTML="<h1>Yayyyy ❤️ Asma said YES! 💍🎆</h1>";
+setInterval(createFirework,700);
 }
 </script>
 
