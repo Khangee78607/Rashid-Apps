@@ -3,34 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Asma ❤️</title>
+<title>Asma ❤️ Ultimate Page</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Courier New',monospace;}
-body{height:100vh;display:flex;justify-content:center;align-items:center;flex-direction:column;background:black;overflow:hidden;color:#ffd700;text-align:center;}
+body{background:black;color:#ffd700;text-align:center;overflow-y:auto;min-height:100vh;display:flex;flex-direction:column;align-items:center;scroll-behavior:smooth;}
 
 /* Stars */
-.star{position:absolute;width:2px;height:2px;background:white;animation:twinkle 2s infinite alternate;border-radius:50%;}
+.star{position:absolute;width:2px;height:2px;background:white;border-radius:50%;animation:twinkle 2s infinite alternate;}
 @keyframes twinkle{from{opacity:0.2;}to{opacity:1;}}
 
 /* Card */
-.card{z-index:2;background:rgba(0,0,0,0.75);padding:30px;border-radius:20px;box-shadow:0 0 25px gold;width:90%;max-width:400px;position:relative;}
-
+.card{background:rgba(0,0,0,0.75);padding:30px;border-radius:20px;box-shadow:0 0 25px gold;width:90%;max-width:400px;margin-top:20px;position:relative;}
 h1{font-size:22px;margin-bottom:15px;animation:heartbeat 1.2s infinite;}
 @keyframes heartbeat{0%{transform:scale(1);}25%{transform:scale(1.1);}50%{transform:scale(1);}75%{transform:scale(1.1);}100%{transform:scale(1);}}
-
 .counter{font-size:18px;line-height:1.6;text-shadow:0 0 10px gold,0 0 20px orange;animation:glow 1.5s infinite alternate;}
 @keyframes glow{from{text-shadow:0 0 5px gold;}to{text-shadow:0 0 20px orange;}}
-
 button{padding:8px 20px;margin-top:15px;border:none;border-radius:20px;cursor:pointer;font-size:14px;position:relative;z-index:3;}
 #yes{background:gold;color:black;}
 #no{background:white;color:black;position:absolute;}
-
-canvas{position:fixed;top:0;left:0;pointer-events:none;z-index:1;}
-
-.photo{width:160px;height:160px;border-radius:50%;border:4px solid gold;box-shadow:0 0 20px gold;margin-top:20px;}
-
-/* Typing effect */
-.message{color:white;font-size:18px;text-shadow:0 0 10px gold;white-space:pre-wrap;}
 
 /* Floating hearts */
 .heart{position:absolute;font-size:20px;animation:floatHeart 1.5s forwards;}
@@ -45,7 +35,7 @@ canvas{position:fixed;top:0;left:0;pointer-events:none;z-index:1;}
 .lockBox button:hover{transform:scale(1.05);box-shadow:0 0 15px gold;}
 #errorMsg{color:red;margin-top:8px;font-weight:bold;}
 .lockBox p.forget{margin-top:10px;cursor:pointer;color:cyan;text-decoration:underline;}
-@keyframes lockAnim{0%{transform:scale(0.5);opacity:0;}100%{transform:scale(1);opacity:1;}}
+@keyframes lockAnim{0%{transform:scale(0.5);opacity:0;}100%{transform:scale(1);opacity:1;} }
 
 /* Future Goals */
 .goals{display:flex;flex-direction:column;gap:10px;margin-top:15px;}
@@ -55,6 +45,11 @@ canvas{position:fixed;top:0;left:0;pointer-events:none;z-index:1;}
 /* Random Love Message */
 .random-message{margin-bottom:15px;font-size:18px;color:white;text-shadow:0 0 10px gold;min-height:25px;animation:heartBlink 1.5s infinite;}
 @keyframes heartBlink{0%{opacity:1;transform:scale(1);}50%{opacity:0.6;transform:scale(1.05);}100%{opacity:1;transform:scale(1);}}
+
+.message{color:white;font-size:18px;text-shadow:0 0 10px gold;white-space:pre-wrap;margin-top:15px;}
+.photo{width:160px;height:160px;border-radius:50%;border:4px solid gold;box-shadow:0 0 20px gold;margin-top:20px;}
+.memories, .future-goals-section, .yes-message-section{margin-top:20px;text-align:left;}
+.memories p, .future-goals-section p, .yes-message-section p{margin:5px 0;}
 </style>
 </head>
 <body>
@@ -78,23 +73,22 @@ canvas{position:fixed;top:0;left:0;pointer-events:none;z-index:1;}
 <div class="counter" id="loveCounter"></div>
 <div class="counter" id="nextValentine" style="margin-top:5px;"></div>
 
-<p style="margin-top:10px;color:white;">
-📅 14 Feb 2021 – First Day Together ❤️<br>
-📅 17 Aug 2021 – First Birthday Together 🎂
-</p>
+<div class="memories">
+<p>📅 14 Feb 2021 – First Day Together ❤️</p>
+<p>📅 17 Aug 2021 – First Birthday Together 🎂</p>
+</div>
 
-<!-- Future Goals -->
-<hr style="margin:20px 0;border:1px solid gold;">
+<div class="future-goals-section">
 <h2 style="color:gold;margin-bottom:10px;">✨ Our Future Goals ✨</h2>
-<div class="goals">
-  <div class="goal">🏠 Apna Ghar</div>
-  <div class="goal">🚗 Apni Car</div>
-  <div class="goal">👶 Cute Baby</div>
-  <div class="goal">🕋 Umrah Together</div>
+<p>🏠 Apna Ghar</p>
+<p>🚗 Apni Car</p>
+<p>👶 Cute Baby</p>
+<p>🕋 Umrah Together</p>
 </div>
 
 <button id="yes" onclick="startCelebration()">Yes 💍</button>
 <button id="no" onmouseover="moveNo()">No 😜</button>
+<div class="yes-message-section" id="yesMessage"></div>
 </div>
 
 <canvas id="canvas"></canvas>
@@ -103,7 +97,7 @@ canvas{position:fixed;top:0;left:0;pointer-events:none;z-index:1;}
 </audio>
 
 <script>
-// ⭐ Stars background
+// 🌟 Stars
 for(let i=0;i<150;i++){
   let star=document.createElement("div");
   star.className="star";
@@ -113,16 +107,11 @@ for(let i=0;i<150;i++){
   document.body.appendChild(star);
 }
 const starColors=["white","gold","pink","cyan","orange"];
-setInterval(()=>{
-  document.querySelectorAll(".star").forEach(star=>{
-    star.style.background=starColors[Math.floor(Math.random()*starColors.length)];
-  });
-},2000);
+setInterval(()=>{document.querySelectorAll(".star").forEach(star=>{star.style.background=starColors[Math.floor(Math.random()*starColors.length)];});},2000);
 
-// 💖 Lock Screen Logic
+// 🔒 Lock Screen
 let attempts=0;
 let password="RA";
-
 function checkPassword(){
   const input=document.getElementById("passwordInput").value;
   const lockScreen=document.getElementById("lockScreen");
@@ -142,28 +131,22 @@ function checkPassword(){
     }
   } else {
     attempts++;
-    if(attempts>=3){
-      errorMsg.innerText="Nice Try 😏";
-      attempts=0;
-    } else {
-      errorMsg.innerText="Wrong Password 😜";
-    }
+    if(attempts>=3){errorMsg.innerText="Nice Try 😏";attempts=0;} 
+    else {errorMsg.innerText="Wrong Password 😜";}
   }
 }
-
-// 💌 Forget Password
 function forgetPassword(){
   const name = prompt("Enter your name to reset password 💖");
   if(name && name.trim().toLowerCase() === "rashid"){
     alert("✅ Password reset! New password is RA");
-    attempts = 0; // reset attempts
+    attempts = 0;
     password="RA";
   } else {
     alert("❌ You are not allowed 😏");
   }
 }
 
-// 💌 Love Counter
+// ⏳ Love Counter
 const startDate=new Date("February 14, 2021 00:00:00");
 function updateLoveTime(){
   const now=new Date();
@@ -181,7 +164,7 @@ function updateLoveTime(){
 setInterval(updateLoveTime,1000);
 updateLoveTime();
 
-// 🎯 Next Valentine
+// ⏰ Next Valentine
 const nextValentine=new Date(`February 14, ${new Date().getFullYear()} 00:00:00`);
 function updateNextValentine(){
   let now=new Date();let year=now.getFullYear();
@@ -197,18 +180,16 @@ function updateNextValentine(){
 setInterval(updateNextValentine,1000);
 updateNextValentine();
 
-// 💌 Random Love Message Typing
+// 💌 Random Love Messages
 const loveMessages=["You Are My Forever ❤️","Jannat Bhi Kam Lagti Hai Tumhare Bina 💖","My Future Wife 💍","Tum Meri Zindagi Ho ✨","Har Dua Mein Sirf Tum 🤲❤️"];
 const messageContainer=document.getElementById("randomLove");
 let messageIndex=0;
-function typeEffect(text,i=0){
-  if(i<text.length){messageContainer.innerHTML+=text.charAt(i);setTimeout(()=>typeEffect(text,i+1),50);}
-}
+function typeEffect(text,i=0,container=messageContainer){if(i<text.length){container.innerHTML+=text.charAt(i);setTimeout(()=>typeEffect(text,i+1,container),50);}}
 function changeMessage(){messageContainer.innerHTML="";typeEffect(loveMessages[messageIndex]);messageIndex=(messageIndex+1)%loveMessages.length;}
 changeMessage();
 setInterval(changeMessage,5000);
 
-// ❌ No Button Move
+// ❌ No button move
 function moveNo(){let btn=document.getElementById("no");btn.style.left=Math.random()*300+"px";btn.style.top=Math.random()*300+"px";}
 
 // 🎆 Fireworks + Hearts + Confetti
@@ -216,15 +197,22 @@ const canvas=document.getElementById("canvas");
 const ctx=canvas.getContext("2d");
 canvas.width=window.innerWidth;canvas.height=window.innerHeight;
 let particles=[];
-function createFirework(){
-  for(let i=0;i<50;i++){particles.push({x:canvas.width/2,y:canvas.height/2,angle:Math.random()*2*Math.PI,speed:Math.random()*6+2,color:"gold",type:"firework"});}
-  for(let i=0;i<20;i++){particles.push({x:canvas.width/2,y:canvas.height/2,angle:Math.random()*2*Math.PI,speed:Math.random()*2+1,color:"pink",type:"heart"});}
-  for(let i=0;i<30;i++){particles.push({x:Math.random()*canvas.width,y:0,angle:Math.random()*2*Math.PI,speed:Math.random()*3+2,color:["red","blue","green","yellow","orange"][Math.floor(Math.random()*5)],type:"confetti"});}
-}
+function createFirework(){for(let i=0;i<50;i++){particles.push({x:canvas.width/2,y:canvas.height/2,angle:Math.random()*2*Math.PI,speed:Math.random()*6+2,color:"gold",type:"firework"});}
+for(let i=0;i<20;i++){particles.push({x:canvas.width/2,y:canvas.height/2,angle:Math.random()*2*Math.PI,speed:Math.random()*2+1,color:"pink",type:"heart"});}
+for(let i=0;i<30;i++){particles.push({x:Math.random()*canvas.width,y:0,angle:Math.random()*2*Math.PI,speed:Math.random()*3+2,color:["red","blue","green","yellow","orange"][Math.floor(Math.random()*5)],type:"confetti"});}}
 function animate(){ctx.fillStyle="rgba(0,0,0,0.2)";ctx.fillRect(0,0,canvas.width,canvas.height);particles.forEach((p,i)=>{p.x+=Math.cos(p.angle)*p.speed;p.y+=Math.sin(p.angle)*p.speed;p.speed*=0.95;ctx.beginPath();ctx.arc(p.x,p.y,p.type==="confetti"?3:2,0,2*Math.PI);ctx.fillStyle=p.color;ctx.fill();if(p.speed<0.5)particles.splice(i,1);});requestAnimationFrame(animate);}
 animate();
 function floatHeart(){const heart=document.createElement("div");heart.className="heart";heart.style.left=(canvas.width/2 + (Math.random()*100-50))+"px";heart.style.top=(canvas.height/2 + 50)+"px";heart.innerHTML="💖";document.body.appendChild(heart);setTimeout(()=>heart.remove(),1500);}
-function startCelebration(){document.querySelector(".card").innerHTML=`<h1 style="color:gold;">💍 She Said YES 💍</h1><img src="./asma.jpg.jpeg" class="photo"><p class="message"></p>`;const msgContainer=document.querySelector(".message");typeEffect("💖 Asma & Rashid 💖\nAap dono hamesha isi tarah saath raho ✨🌹", msgContainer);setInterval(()=>{createFirework(); floatHeart();},800);}
+function startCelebration(){
+  const msgContainer=document.getElementById("yesMessage");
+  msgContainer.innerHTML="<h2 style='color:gold'>💍 She Said YES 💍</h2><img src='./asma.jpg.jpeg' class='photo'>";
+  const message=document.createElement('p');
+  message.className='message';
+  msgContainer.appendChild(message);
+  typeEffect("💖 Asma & Rashid 💖\nAap dono hamesha isi tarah saath raho ✨🌹",0,message);
+  setInterval(()=>{createFirework(); floatHeart();},800);
+  msgContainer.scrollIntoView({behavior:'smooth'});
+}
 </script>
 </body>
 </html>
