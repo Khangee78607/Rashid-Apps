@@ -4,306 +4,227 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Asma ❤️</title>
-  <title>Total Relationship Time </title>
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Courier New',monospace;}
-body{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-background:black;
-overflow:hidden;
-color:#ffd700;
-text-align:center;
-}
+body{height:100vh;display:flex;justify-content:center;align-items:center;flex-direction:column;background:black;overflow:hidden;color:#ffd700;text-align:center;}
 
 /* Stars */
-.star{
-position:absolute;
-width:2px;
-height:2px;
-background:white;
-animation:twinkle 2s infinite alternate;
-}
+.star{position:absolute;width:2px;height:2px;background:white;animation:twinkle 2s infinite alternate;border-radius:50%;}
 @keyframes twinkle{from{opacity:0.2;}to{opacity:1;}}
 
 /* Card */
-.card{
-z-index:2;
-background:rgba(0,0,0,0.75);
-padding:30px;
-border-radius:20px;
-box-shadow:0 0 25px gold;
-width:90%;
-max-width:400px;
-position:relative;
-}
+.card{z-index:2;background:rgba(0,0,0,0.75);padding:30px;border-radius:20px;box-shadow:0 0 25px gold;width:90%;max-width:400px;position:relative;}
 
-h1{
-font-size:22px;
-margin-bottom:15px;
-animation:heartbeat 1.2s infinite;
-}
+h1{font-size:22px;margin-bottom:15px;animation:heartbeat 1.2s infinite;}
 @keyframes heartbeat{0%{transform:scale(1);}25%{transform:scale(1.1);}50%{transform:scale(1);}75%{transform:scale(1.1);}100%{transform:scale(1);}}
 
-.counter{
-font-size:18px;
-line-height:1.6;
-text-shadow:0 0 10px gold,0 0 20px orange;
-animation:glow 1.5s infinite alternate;
-}
+.counter{font-size:18px;line-height:1.6;text-shadow:0 0 10px gold,0 0 20px orange;animation:glow 1.5s infinite alternate;}
 @keyframes glow{from{text-shadow:0 0 5px gold;}to{text-shadow:0 0 20px orange;}}
 
-button{
-padding:8px 20px;
-margin-top:15px;
-border:none;
-border-radius:20px;
-cursor:pointer;
-font-size:14px;
-position:relative;
-z-index:3;
-}
+button{padding:8px 20px;margin-top:15px;border:none;border-radius:20px;cursor:pointer;font-size:14px;position:relative;z-index:3;}
 #yes{background:gold;color:black;}
 #no{background:white;color:black;position:absolute;}
 
-canvas{
-position:fixed;
-top:0;
-left:0;
-pointer-events:none;
-z-index:1;
-}
+canvas{position:fixed;top:0;left:0;pointer-events:none;z-index:1;}
 
-.photo{
-width:160px;
-height:160px;
-border-radius:50%;
-border:4px solid gold;
-box-shadow:0 0 20px gold;
-margin-top:20px;
-}
+.photo{width:160px;height:160px;border-radius:50%;border:4px solid gold;box-shadow:0 0 20px gold;margin-top:20px;}
 
 /* Typing effect */
-.message{
-color:white;
-font-size:18px;
-text-shadow:0 0 10px gold;
-white-space:pre-wrap;
-}
+.message{color:white;font-size:18px;text-shadow:0 0 10px gold;white-space:pre-wrap;}
 
 /* Floating hearts */
-.heart{
-position:absolute;
-font-size:20px;
-animation:floatHeart 1.5s forwards;
-}
+.heart{position:absolute;font-size:20px;animation:floatHeart 1.5s forwards;}
 @keyframes floatHeart{0%{opacity:1;transform:translateY(0);}100%{opacity:0;transform:translateY(-80px) scale(1.5);}}
+
+/* Lock Screen */
+#lockScreen{position:fixed;width:100%;height:100%;background:black;display:flex;justify-content:center;align-items:center;z-index:9999;}
+.lockBox{background:rgba(0,0,0,0.85);padding:30px;border-radius:20px;box-shadow:0 0 25px gold;text-align:center;animation:lockAnim 1s ease;}
+.lockBox input{padding:10px;margin-top:10px;border-radius:15px;border:none;text-align:center;font-size:16px;transition:0.3s;}
+.lockBox input:focus{box-shadow:0 0 15px gold;outline:none;transform:scale(1.05);}
+.lockBox button{margin-top:10px;padding:8px 20px;border:none;border-radius:20px;background:gold;cursor:pointer;font-weight:bold;transition:0.3s;}
+.lockBox button:hover{transform:scale(1.05);box-shadow:0 0 15px gold;}
+#errorMsg{color:red;margin-top:8px;font-weight:bold;}
+.lockBox p.forget{margin-top:10px;cursor:pointer;color:cyan;text-decoration:underline;}
+@keyframes lockAnim{0%{transform:scale(0.5);opacity:0;}100%{transform:scale(1);opacity:1;}}
+
+/* Future Goals */
+.goals{display:flex;flex-direction:column;gap:10px;margin-top:15px;}
+.goal{background:rgba(255,215,0,0.1);padding:10px;border-radius:15px;border:1px solid gold;transition:0.3s;cursor:pointer;}
+.goal:hover{background:gold;color:black;transform:scale(1.05);box-shadow:0 0 15px gold;}
+
+/* Random Love Message */
+.random-message{margin-bottom:15px;font-size:18px;color:white;text-shadow:0 0 10px gold;min-height:25px;animation:heartBlink 1.5s infinite;}
+@keyframes heartBlink{0%{opacity:1;transform:scale(1);}50%{opacity:0.6;transform:scale(1.05);}100%{opacity:1;transform:scale(1);}}
 </style>
 </head>
-
 <body>
 
+<!-- Lock Screen -->
+<div id="lockScreen">
+  <div class="lockBox">
+    <h2>🔒 Private Love Page 🔒</h2>
+    <p>Enter Password To Continue 💖</p>
+    <input type="password" id="passwordInput" placeholder="Enter Password">
+    <button onclick="checkPassword()">Unlock ❤️</button>
+    <p id="errorMsg"></p>
+    <p class="forget" onclick="forgetPassword()">Forgot Password?</p>
+  </div>
+</div>
+
+<!-- Main Card -->
 <div class="card">
 <h1>💖 Asma 💖</h1>
-
+<div id="randomLove" class="random-message"></div>
 <div class="counter" id="loveCounter"></div>
 <div class="counter" id="nextValentine" style="margin-top:5px;"></div>
 
 <p style="margin-top:10px;color:white;">
-14 February 2021 Se Sirf Ap Mery Sat Happy Hu Or Any Waly Kafi Zada 14 February Sat Guzarna Chanty Hu ❤️
+📅 14 Feb 2021 – First Day Together ❤️<br>
+📅 17 Aug 2021 – First Birthday Together 🎂
 </p>
+
+<!-- Future Goals -->
+<hr style="margin:20px 0;border:1px solid gold;">
+<h2 style="color:gold;margin-bottom:10px;">✨ Our Future Goals ✨</h2>
+<div class="goals">
+  <div class="goal">🏠 Apna Ghar</div>
+  <div class="goal">🚗 Apni Car</div>
+  <div class="goal">👶 Cute Baby</div>
+  <div class="goal">🕋 Umrah Together</div>
+</div>
 
 <button id="yes" onclick="startCelebration()">Yes 💍</button>
 <button id="no" onmouseover="moveNo()">No 😜</button>
 </div>
 
 <canvas id="canvas"></canvas>
-
-<!-- Background Music -->
-<audio id="bgMusic" autoplay loop>
+<audio id="bgMusic" loop>
   <source src="romantic.mp3.mp3" type="audio/mp3">
 </audio>
 
 <script>
-
-/* Generate Stars */
+// ⭐ Stars background
 for(let i=0;i<150;i++){
-let star=document.createElement("div");
-star.className="star";
-star.style.top=Math.random()*100+"vh";
-star.style.left=Math.random()*100+"vw";
-star.style.animationDuration=(Math.random()*3+1)+"s";
-document.body.appendChild(star);
+  let star=document.createElement("div");
+  star.className="star";
+  star.style.top=Math.random()*100+"vh";
+  star.style.left=Math.random()*100+"vw";
+  star.style.animationDuration=(Math.random()*3+1)+"s";
+  document.body.appendChild(star);
+}
+const starColors=["white","gold","pink","cyan","orange"];
+setInterval(()=>{
+  document.querySelectorAll(".star").forEach(star=>{
+    star.style.background=starColors[Math.floor(Math.random()*starColors.length)];
+  });
+},2000);
+
+// 💖 Lock Screen Logic
+let attempts=0;
+let password="RA";
+
+function checkPassword(){
+  const input=document.getElementById("passwordInput").value;
+  const lockScreen=document.getElementById("lockScreen");
+  const errorMsg=document.getElementById("errorMsg");
+  if(input===password){
+    lockScreen.style.display="none";
+    document.getElementById("bgMusic").play();
+    for(let i=0;i<30;i++){
+      const heart=document.createElement("div");
+      heart.className="heart";
+      heart.style.left=(window.innerWidth/2+Math.random()*200-100)+"px";
+      heart.style.top=(window.innerHeight/2+Math.random()*200-100)+"px";
+      heart.style.fontSize=(20+Math.random()*20)+"px";
+      heart.innerText="💖";
+      document.body.appendChild(heart);
+      setTimeout(()=>heart.remove(),2000);
+    }
+  } else {
+    attempts++;
+    if(attempts>=3){
+      errorMsg.innerText="Nice Try 😏";
+      attempts=0;
+    } else {
+      errorMsg.innerText="Wrong Password 😜";
+    }
+  }
 }
 
-/* Live Love Counter */
+// 💌 Forget Password
+function forgetPassword(){
+  const name = prompt("Enter your name to reset password 💖");
+  if(name && name.trim().toLowerCase() === "rashid"){
+    alert("✅ Password reset! New password is RA");
+    attempts = 0; // reset attempts
+    password="RA";
+  } else {
+    alert("❌ You are not allowed 😏");
+  }
+}
+
+// 💌 Love Counter
 const startDate=new Date("February 14, 2021 00:00:00");
-
 function updateLoveTime(){
-const now=new Date();
-
-let years=now.getFullYear()-startDate.getFullYear();
-let months=now.getMonth()-startDate.getMonth();
-let days=now.getDate()-startDate.getDate();
-
-if(days<0){
-months--;
-days+=new Date(now.getFullYear(),now.getMonth(),0).getDate();
-}
-
-if(months<0){
-years--;
-months+=12;
-}
-
-const diff=now-startDate;
-const hours=Math.floor((diff/(1000*60*60))%24);
-const minutes=Math.floor((diff/(1000*60))%60);
-const seconds=Math.floor((diff/1000)%60);
-
-document.getElementById("loveCounter").innerHTML=
-`${years}Y : ${months}M : ${days}D <br>
-${hours}H : ${minutes}M : ${seconds}S`;
+  const now=new Date();
+  let years=now.getFullYear()-startDate.getFullYear();
+  let months=now.getMonth()-startDate.getMonth();
+  let days=now.getDate()-startDate.getDate();
+  if(days<0){months--;days+=new Date(now.getFullYear(),now.getMonth(),0).getDate();}
+  if(months<0){years--;months+=12;}
+  const diff=now-startDate;
+  const hours=Math.floor((diff/(1000*60*60))%24);
+  const minutes=Math.floor((diff/(1000*60))%60);
+  const seconds=Math.floor((diff/1000)%60);
+  document.getElementById("loveCounter").innerHTML=`${years}Y : ${months}M : ${days}D <br>${hours}H : ${minutes}M : ${seconds}S`;
 }
 setInterval(updateLoveTime,1000);
 updateLoveTime();
 
-/* Next Valentine's Day Countdown */
+// 🎯 Next Valentine
 const nextValentine=new Date(`February 14, ${new Date().getFullYear()} 00:00:00`);
-
 function updateNextValentine(){
-  let now=new Date();
-  let year=now.getFullYear();
-  if(now > new Date(`February 14, ${year} 00:00:00`)){
-    year += 1;
-  }
+  let now=new Date();let year=now.getFullYear();
+  if(now>new Date(`February 14, ${year} 00:00:00`)){year+=1;}
   nextValentine.setFullYear(year);
-
-  let diff=nextValentine - now;
-
+  let diff=nextValentine-now;
   let days=Math.floor(diff/(1000*60*60*24));
   let hours=Math.floor((diff/(1000*60*60))%24);
   let minutes=Math.floor((diff/(1000*60))%60);
   let seconds=Math.floor((diff/1000)%60);
-
-  document.getElementById("nextValentine").innerHTML=
-  `Next Valentine's Day: ${days}D : ${hours}H : ${minutes}M : ${seconds}S`;
+  document.getElementById("nextValentine").innerHTML=`Next Valentine's Day: ${days}D : ${hours}H : ${minutes}M : ${seconds}S`;
 }
 setInterval(updateNextValentine,1000);
 updateNextValentine();
 
-/* No Button Move */
-function moveNo(){
-let btn=document.getElementById("no");
-btn.style.left=Math.random()*300+"px";
-btn.style.top=Math.random()*300+"px";
+// 💌 Random Love Message Typing
+const loveMessages=["You Are My Forever ❤️","Jannat Bhi Kam Lagti Hai Tumhare Bina 💖","My Future Wife 💍","Tum Meri Zindagi Ho ✨","Har Dua Mein Sirf Tum 🤲❤️"];
+const messageContainer=document.getElementById("randomLove");
+let messageIndex=0;
+function typeEffect(text,i=0){
+  if(i<text.length){messageContainer.innerHTML+=text.charAt(i);setTimeout(()=>typeEffect(text,i+1),50);}
 }
+function changeMessage(){messageContainer.innerHTML="";typeEffect(loveMessages[messageIndex]);messageIndex=(messageIndex+1)%loveMessages.length;}
+changeMessage();
+setInterval(changeMessage,5000);
 
-/* Fireworks + Hearts + Confetti */
+// ❌ No Button Move
+function moveNo(){let btn=document.getElementById("no");btn.style.left=Math.random()*300+"px";btn.style.top=Math.random()*300+"px";}
+
+// 🎆 Fireworks + Hearts + Confetti
 const canvas=document.getElementById("canvas");
 const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+canvas.width=window.innerWidth;canvas.height=window.innerHeight;
 let particles=[];
-
 function createFirework(){
-for(let i=0;i<50;i++){
-particles.push({
-x:canvas.width/2,
-y:canvas.height/2,
-angle:Math.random()*2*Math.PI,
-speed:Math.random()*6+2,
-color:"gold",
-type:"firework"
-});
+  for(let i=0;i<50;i++){particles.push({x:canvas.width/2,y:canvas.height/2,angle:Math.random()*2*Math.PI,speed:Math.random()*6+2,color:"gold",type:"firework"});}
+  for(let i=0;i<20;i++){particles.push({x:canvas.width/2,y:canvas.height/2,angle:Math.random()*2*Math.PI,speed:Math.random()*2+1,color:"pink",type:"heart"});}
+  for(let i=0;i<30;i++){particles.push({x:Math.random()*canvas.width,y:0,angle:Math.random()*2*Math.PI,speed:Math.random()*3+2,color:["red","blue","green","yellow","orange"][Math.floor(Math.random()*5)],type:"confetti"});}
 }
-for(let i=0;i<20;i++){
-particles.push({
-x:canvas.width/2,
-y:canvas.height/2,
-angle:Math.random()*2*Math.PI,
-speed:Math.random()*2+1,
-color:"pink",
-type:"heart"
-});
-}
-for(let i=0;i<30;i++){
-particles.push({
-x:Math.random()*canvas.width,
-y:0,
-angle:Math.random()*2*Math.PI,
-speed:Math.random()*3+2,
-color:["red","blue","green","yellow","orange"][Math.floor(Math.random()*5)],
-type:"confetti"
-});
-}
-}
-
-function animate(){
-ctx.fillStyle="rgba(0,0,0,0.2)";
-ctx.fillRect(0,0,canvas.width,canvas.height);
-
-particles.forEach((p,i)=>{
-p.x+=Math.cos(p.angle)*p.speed;
-p.y+=Math.sin(p.angle)*p.speed;
-p.speed*=0.95;
-
-ctx.beginPath();
-ctx.arc(p.x,p.y,p.type==="confetti"?3:2,0,2*Math.PI);
-ctx.fillStyle=p.color;
-ctx.fill();
-
-if(p.speed<0.5)particles.splice(i,1);
-});
-
-requestAnimationFrame(animate);
-}
+function animate(){ctx.fillStyle="rgba(0,0,0,0.2)";ctx.fillRect(0,0,canvas.width,canvas.height);particles.forEach((p,i)=>{p.x+=Math.cos(p.angle)*p.speed;p.y+=Math.sin(p.angle)*p.speed;p.speed*=0.95;ctx.beginPath();ctx.arc(p.x,p.y,p.type==="confetti"?3:2,0,2*Math.PI);ctx.fillStyle=p.color;ctx.fill();if(p.speed<0.5)particles.splice(i,1);});requestAnimationFrame(animate);}
 animate();
-
-/* Floating heart on click */
-function floatHeart(){
-const heart=document.createElement("div");
-heart.className="heart";
-heart.style.left=(canvas.width/2 + (Math.random()*100-50))+"px";
-heart.style.top=(canvas.height/2 + 50)+"px";
-heart.innerHTML="💖";
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),1500);
-}
-
-/* Typing Text */
-function typeMessage(text,container){
-let i=0;
-container.innerHTML="";
-function typing(){
-if(i<text.length){
-container.innerHTML+=text.charAt(i);
-i++;
-setTimeout(typing,50);
-}}
-typing();
-}
-
-/* YES Celebration */
-function startCelebration(){
-document.querySelector(".card").innerHTML=`
-<h1 style="color:gold;">💍 She Said YES 💍</h1>
-<img src="./asma.jpg.jpeg" class="photo">
-<p class="message"></p>
-`;
-
-const msgContainer=document.querySelector(".message");
-typeMessage("💖 Asma & Rashid 💖\nAap dono hamesha isi tarah saath raho ✨🌹", msgContainer);
-
-// Fireworks + hearts + confetti every 0.8s
-setInterval(()=>{createFirework(); floatHeart();},800);
-}
-
+function floatHeart(){const heart=document.createElement("div");heart.className="heart";heart.style.left=(canvas.width/2 + (Math.random()*100-50))+"px";heart.style.top=(canvas.height/2 + 50)+"px";heart.innerHTML="💖";document.body.appendChild(heart);setTimeout(()=>heart.remove(),1500);}
+function startCelebration(){document.querySelector(".card").innerHTML=`<h1 style="color:gold;">💍 She Said YES 💍</h1><img src="./asma.jpg.jpeg" class="photo"><p class="message"></p>`;const msgContainer=document.querySelector(".message");typeEffect("💖 Asma & Rashid 💖\nAap dono hamesha isi tarah saath raho ✨🌹", msgContainer);setInterval(()=>{createFirework(); floatHeart();},800);}
 </script>
-
 </body>
 </html>
