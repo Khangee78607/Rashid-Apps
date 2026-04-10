@@ -3,216 +3,228 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Asma ❤️ Ultimate Page</title>
+<title>Asma ❤️ Ultimate Pro Max</title>
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Courier New',monospace;}
-body{background:black;color:#ffd700;text-align:center;overflow-y:auto;min-height:100vh;display:flex;flex-direction:column;align-items:center;scroll-behavior:smooth;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Courier New;}
+body{background:black;color:gold;text-align:center;overflow-x:hidden;}
 
-/* Stars */
-.star{position:absolute;width:2px;height:2px;background:white;border-radius:50%;animation:twinkle 2s infinite alternate;}
-@keyframes twinkle{from{opacity:0.2;}to{opacity:1;}}
+/* CARD */
+.card{margin-top:80px;padding:20px;}
+.counter{margin:10px;font-size:14px;color:gold;}
 
-/* Card */
-.card{background:rgba(0,0,0,0.75);padding:30px;border-radius:20px;box-shadow:0 0 25px gold;width:90%;max-width:400px;margin-top:20px;position:relative;}
-h1{font-size:22px;margin-bottom:15px;animation:heartbeat 1.2s infinite;}
-@keyframes heartbeat{0%{transform:scale(1);}25%{transform:scale(1.1);}50%{transform:scale(1);}75%{transform:scale(1.1);}100%{transform:scale(1);}}
-.counter{font-size:18px;line-height:1.6;text-shadow:0 0 10px gold,0 0 20px orange;animation:glow 1.5s infinite alternate;}
-@keyframes glow{from{text-shadow:0 0 5px gold;}to{text-shadow:0 0 20px orange;}}
-button{padding:8px 20px;margin-top:15px;border:none;border-radius:20px;cursor:pointer;font-size:14px;position:relative;z-index:3;}
-#yes{background:gold;color:black;}
-#no{background:white;color:black;position:absolute;}
+/* BUTTON */
+button{padding:8px 18px;border:none;border-radius:20px;background:gold;cursor:pointer;margin:5px;}
 
-/* Floating hearts */
-.heart{position:absolute;font-size:20px;animation:floatHeart 1.5s forwards;}
-@keyframes floatHeart{0%{opacity:1;transform:translateY(0);}100%{opacity:0;transform:translateY(-80px) scale(1.5);}}
+/* ---------------- FINGERPRINT ---------------- */
+.fingerprint-container{width:120px;height:120px;margin:20px auto;position:relative;}
+.fingerprint{
+width:120px;height:120px;border:3px solid gold;border-radius:50%;
+box-shadow:0 0 20px gold;
+}
+.scan-line{
+position:absolute;width:100%;height:4px;background:cyan;
+top:0;opacity:0;
+}
+.scanning .scan-line{animation:scan 2s linear infinite;opacity:1;}
+@keyframes scan{0%{top:0;}100%{top:110px;}}
 
-/* Lock Screen */
-#lockScreen{position:fixed;width:100%;height:100%;background:black;display:flex;justify-content:center;align-items:center;z-index:9999;}
-.lockBox{background:rgba(0,0,0,0.85);padding:30px;border-radius:20px;box-shadow:0 0 25px gold;text-align:center;animation:lockAnim 1s ease;}
-.lockBox input{padding:10px;margin-top:10px;border-radius:15px;border:none;text-align:center;font-size:16px;transition:0.3s;}
-.lockBox input:focus{box-shadow:0 0 15px gold;outline:none;transform:scale(1.05);}
-.lockBox button{margin-top:10px;padding:8px 20px;border:none;border-radius:20px;background:gold;cursor:pointer;font-weight:bold;transition:0.3s;}
-.lockBox button:hover{transform:scale(1.05);box-shadow:0 0 15px gold;}
-#errorMsg{color:red;margin-top:8px;font-weight:bold;}
-.lockBox p.forget{margin-top:10px;cursor:pointer;color:cyan;text-decoration:underline;}
-@keyframes lockAnim{0%{transform:scale(0.5);opacity:0;}100%{transform:scale(1);opacity:1;} }
+/* SUCCESS / ERROR */
+.success-glow .fingerprint{border-color:lime;box-shadow:0 0 25px lime;}
+.error-glow .fingerprint{border-color:red;box-shadow:0 0 25px red;}
+@keyframes vibrate{0%{transform:translateX(0);}25%{transform:translateX(-5px);}50%{transform:translateX(5px);}75%{transform:translateX(-5px);}100%{transform:translateX(0);}}
+.vibrate{animation:vibrate 0.3s;}
 
-/* Future Goals */
-.goals{display:flex;flex-direction:column;gap:10px;margin-top:15px;}
-.goal{background:rgba(255,215,0,0.1);padding:10px;border-radius:15px;border:1px solid gold;transition:0.3s;cursor:pointer;}
-.goal:hover{background:gold;color:black;transform:scale(1.05);box-shadow:0 0 15px gold;}
+/* RING */
+@keyframes ringPop{0%{transform:scale(0);}50%{transform:scale(1.3);}100%{transform:scale(1);}}
+.ring{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:90px;animation:ringPop 1s;z-index:99999;}
 
-/* Random Love Message */
-.random-message{margin-bottom:15px;font-size:18px;color:white;text-shadow:0 0 10px gold;min-height:25px;animation:heartBlink 1.5s infinite;}
-@keyframes heartBlink{0%{opacity:1;transform:scale(1);}50%{opacity:0.6;transform:scale(1.05);}100%{opacity:1;transform:scale(1);}}
+/* ROSE */
+.rose{position:fixed;font-size:22px;top:-20px;z-index:9999;transition:4s linear;}
 
-.message{color:white;font-size:18px;text-shadow:0 0 10px gold;white-space:pre-wrap;margin-top:15px;}
-.photo{width:160px;height:160px;border-radius:50%;border:4px solid gold;box-shadow:0 0 20px gold;margin-top:20px;}
-.memories, .future-goals-section, .yes-message-section{margin-top:20px;text-align:left;}
-.memories p, .future-goals-section p, .yes-message-section p{margin:5px 0;}
+/* SHAKE */
+@keyframes shake{0%{transform:translate(0);}25%{transform:translate(5px);}50%{transform:translate(-5px);}75%{transform:translate(5px);}100%{transform:translate(0);}}
+.shake{animation:shake 0.4s infinite;}
+
+/* MOBILE */
+@media(max-width:600px){
+.card{width:95%;}
+.counter{font-size:12px;}
+button{padding:6px 12px;font-size:12px;}
+.ring{font-size:60px;}
+}
+
+/* GIFT */
+#giftPopup{
+display:none;position:fixed;top:50%;left:50%;
+transform:translate(-50%,-50%);
+background:black;padding:25px;border-radius:20px;
+box-shadow:0 0 25px gold;z-index:999999;
+}
 </style>
 </head>
+
 <body>
 
-<!-- Lock Screen -->
+<!-- LOCK SCREEN -->
 <div id="lockScreen">
-  <div class="lockBox">
-    <h2>🔒 Private Love Page 🔒</h2>
-    <p>Enter Password To Continue 💖</p>
-    <input type="password" id="passwordInput" placeholder="Enter Password">
-    <button onclick="checkPassword()">Unlock ❤️</button>
-    <p id="errorMsg"></p>
-    <p class="forget" onclick="forgetPassword()">Forgot Password?</p>
-  </div>
+
+<h2>🔐 Fingerprint Secure Love</h2>
+
+<div class="fingerprint-container">
+<div class="fingerprint"></div>
+<div class="scan-line"></div>
 </div>
 
-<!-- Main Card -->
+<input type="password" id="passwordInput" placeholder="Enter Password">
+<br>
+<button onclick="checkPassword()">Unlock ❤️</button>
+<p id="errorMsg" style="color:red;"></p>
+
+</div>
+
+<!-- MAIN -->
+<div id="mainContent" style="display:none;">
 <div class="card">
+
 <h1>💖 Asma 💖</h1>
-<div id="randomLove" class="random-message"></div>
+
 <div class="counter" id="loveCounter"></div>
-<div class="counter" id="nextValentine" style="margin-top:5px;"></div>
+<div class="counter" id="valentineCounter"></div>
+<div class="counter" id="birthdayCounter"></div>
 
-<div class="memories">
-<p>📅 14 Feb 2021 – First Day Together ❤️</p>
-<p>📅 17 Aug 2021 – First Birthday Together 🎂</p>
+<button onclick="startCelebration()">💍 Yes</button>
+<button onclick="playVoice()">🎤 Voice</button>
+
+</div>
 </div>
 
-<div class="future-goals-section">
-<h2 style="color:gold;margin-bottom:10px;">✨ Our Future Goals ✨</h2>
-<p>🏠 Apna Ghar</p>
-<p>🚗 Apni Car</p>
-<p>👶 Cute Baby</p>
-<p>🕋 Umrah Together</p>
+<!-- GIFT -->
+<div id="giftPopup">
+<h2>🎁 Surprise Gift 🎁</h2>
+<p style="color:white;">You are my everything 💖</p>
 </div>
 
-<button id="yes" onclick="startCelebration()">Yes 💍</button>
-<button id="no" onmouseover="moveNo()">No 😜</button>
-<div class="yes-message-section" id="yesMessage"></div>
-</div>
-
-<canvas id="canvas"></canvas>
-<audio id="bgMusic" loop>
-  <source src="romantic.mp3.mp3" type="audio/mp3">
-</audio>
+<!-- AUDIO -->
+<audio id="scanSound"><source src="scan.mp3"></audio>
+<audio id="bgMusic" loop><source src="romantic.mp3"></audio>
+<audio id="birthdayMusic" loop><source src="birthday.mp3"></audio>
+<audio id="voiceMessage"><source src="voice.mp3"></audio>
 
 <script>
-// 🌟 Stars
-for(let i=0;i<150;i++){
-  let star=document.createElement("div");
-  star.className="star";
-  star.style.top=Math.random()*100+"vh";
-  star.style.left=Math.random()*100+"vw";
-  star.style.animationDuration=(Math.random()*3+1)+"s";
-  document.body.appendChild(star);
-}
-const starColors=["white","gold","pink","cyan","orange"];
-setInterval(()=>{document.querySelectorAll(".star").forEach(star=>{star.style.background=starColors[Math.floor(Math.random()*starColors.length)];});},2000);
 
-// 🔒 Lock Screen
-let attempts=0;
-let password="RA";
+const password="RA";
+
+/* PASSWORD + FINGERPRINT */
 function checkPassword(){
-  const input=document.getElementById("passwordInput").value;
-  const lockScreen=document.getElementById("lockScreen");
-  const errorMsg=document.getElementById("errorMsg");
-  if(input===password){
-    lockScreen.style.display="none";
-    document.getElementById("bgMusic").play();
-    for(let i=0;i<30;i++){
-      const heart=document.createElement("div");
-      heart.className="heart";
-      heart.style.left=(window.innerWidth/2+Math.random()*200-100)+"px";
-      heart.style.top=(window.innerHeight/2+Math.random()*200-100)+"px";
-      heart.style.fontSize=(20+Math.random()*20)+"px";
-      heart.innerText="💖";
-      document.body.appendChild(heart);
-      setTimeout(()=>heart.remove(),2000);
-    }
-  } else {
-    attempts++;
-    if(attempts>=3){errorMsg.innerText="Nice Try 😏";attempts=0;} 
-    else {errorMsg.innerText="Wrong Password 😜";}
-  }
+const input=document.getElementById("passwordInput");
+const container=document.querySelector(".fingerprint-container");
+const error=document.getElementById("errorMsg");
+
+if(input.value===password){
+
+container.classList.add("scanning");
+document.getElementById("scanSound").play();
+
+setTimeout(()=>{
+container.classList.add("success-glow");
+},1200);
+
+setTimeout(()=>{
+document.getElementById("lockScreen").style.display="none";
+document.getElementById("mainContent").style.display="block";
+document.getElementById("bgMusic").play();
+},2200);
+
+}else{
+
+container.classList.add("error-glow","vibrate");
+error.innerText="Access Denied 🚫";
+
+setTimeout(()=>{
+container.classList.remove("error-glow","vibrate");
+},1000);
 }
-function forgetPassword(){
-  const name = prompt("Enter your name to reset password 💖");
-  if(name && name.trim().toLowerCase() === "rashid"){
-    alert("✅ Password reset! New password is RA");
-    attempts = 0;
-    password="RA";
-  } else {
-    alert("❌ You are not allowed 😏");
-  }
 }
 
-// ⏳ Love Counter
-const startDate=new Date("February 14, 2021 00:00:00");
-function updateLoveTime(){
-  const now=new Date();
-  let years=now.getFullYear()-startDate.getFullYear();
-  let months=now.getMonth()-startDate.getMonth();
-  let days=now.getDate()-startDate.getDate();
-  if(days<0){months--;days+=new Date(now.getFullYear(),now.getMonth(),0).getDate();}
-  if(months<0){years--;months+=12;}
-  const diff=now-startDate;
-  const hours=Math.floor((diff/(1000*60*60))%24);
-  const minutes=Math.floor((diff/(1000*60))%60);
-  const seconds=Math.floor((diff/1000)%60);
-  document.getElementById("loveCounter").innerHTML=`${years}Y : ${months}M : ${days}D <br>${hours}H : ${minutes}M : ${seconds}S`;
-}
-setInterval(updateLoveTime,1000);
-updateLoveTime();
+/* TOUCH LOGIN */
+document.querySelector(".fingerprint-container").addEventListener("click",checkPassword);
 
-// ⏰ Next Valentine
-const nextValentine=new Date(`February 14, ${new Date().getFullYear()} 00:00:00`);
-function updateNextValentine(){
-  let now=new Date();let year=now.getFullYear();
-  if(now>new Date(`February 14, ${year} 00:00:00`)){year+=1;}
-  nextValentine.setFullYear(year);
-  let diff=nextValentine-now;
-  let days=Math.floor(diff/(1000*60*60*24));
-  let hours=Math.floor((diff/(1000*60*60))%24);
-  let minutes=Math.floor((diff/(1000*60))%60);
-  let seconds=Math.floor((diff/1000)%60);
-  document.getElementById("nextValentine").innerHTML=`Next Valentine's Day: ${days}D : ${hours}H : ${minutes}M : ${seconds}S`;
-}
-setInterval(updateNextValentine,1000);
-updateNextValentine();
+/* LOVE COUNTER */
+setInterval(()=>{
+let start=new Date("2021-02-14");
+let now=new Date();
+document.getElementById("loveCounter").innerText=
+"Love Days: "+Math.floor((now-start)/86400000);
+},1000);
 
-// 💌 Random Love Messages
-const loveMessages=["You Are My Forever ❤️","Jannat Bhi Kam Lagti Hai Tumhare Bina 💖","My Future Wife 💍","Tum Meri Zindagi Ho ✨","Har Dua Mein Sirf Tum 🤲❤️"];
-const messageContainer=document.getElementById("randomLove");
-let messageIndex=0;
-function typeEffect(text,i=0,container=messageContainer){if(i<text.length){container.innerHTML+=text.charAt(i);setTimeout(()=>typeEffect(text,i+1,container),50);}}
-function changeMessage(){messageContainer.innerHTML="";typeEffect(loveMessages[messageIndex]);messageIndex=(messageIndex+1)%loveMessages.length;}
-changeMessage();
-setInterval(changeMessage,5000);
+/* VALENTINE */
+setInterval(()=>{
+let now=new Date();
+let year=now.getFullYear();
+if(now>new Date(`February 14, ${year}`))year++;
+let diff=new Date(`February 14, ${year}`)-now;
+document.getElementById("valentineCounter").innerText=
+"Next Valentine: "+Math.floor(diff/86400000)+" Days";
+},1000);
 
-// ❌ No button move
-function moveNo(){let btn=document.getElementById("no");btn.style.left=Math.random()*300+"px";btn.style.top=Math.random()*300+"px";}
+/* BIRTHDAY */
+setInterval(()=>{
+let now=new Date();
+let year=now.getFullYear();
+if(now>new Date(`August 17, ${year}`))year++;
+let diff=new Date(`August 17, ${year}`)-now;
+document.getElementById("birthdayCounter").innerText=
+"Asma Birthday: "+Math.floor(diff/86400000)+" Days";
+},1000);
 
-// 🎆 Fireworks + Hearts + Confetti
-const canvas=document.getElementById("canvas");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;canvas.height=window.innerHeight;
-let particles=[];
-function createFirework(){for(let i=0;i<50;i++){particles.push({x:canvas.width/2,y:canvas.height/2,angle:Math.random()*2*Math.PI,speed:Math.random()*6+2,color:"gold",type:"firework"});}
-for(let i=0;i<20;i++){particles.push({x:canvas.width/2,y:canvas.height/2,angle:Math.random()*2*Math.PI,speed:Math.random()*2+1,color:"pink",type:"heart"});}
-for(let i=0;i<30;i++){particles.push({x:Math.random()*canvas.width,y:0,angle:Math.random()*2*Math.PI,speed:Math.random()*3+2,color:["red","blue","green","yellow","orange"][Math.floor(Math.random()*5)],type:"confetti"});}}
-function animate(){ctx.fillStyle="rgba(0,0,0,0.2)";ctx.fillRect(0,0,canvas.width,canvas.height);particles.forEach((p,i)=>{p.x+=Math.cos(p.angle)*p.speed;p.y+=Math.sin(p.angle)*p.speed;p.speed*=0.95;ctx.beginPath();ctx.arc(p.x,p.y,p.type==="confetti"?3:2,0,2*Math.PI);ctx.fillStyle=p.color;ctx.fill();if(p.speed<0.5)particles.splice(i,1);});requestAnimationFrame(animate);}
-animate();
-function floatHeart(){const heart=document.createElement("div");heart.className="heart";heart.style.left=(canvas.width/2 + (Math.random()*100-50))+"px";heart.style.top=(canvas.height/2 + 50)+"px";heart.innerHTML="💖";document.body.appendChild(heart);setTimeout(()=>heart.remove(),1500);}
+/* RING */
 function startCelebration(){
-  const msgContainer=document.getElementById("yesMessage");
-  msgContainer.innerHTML="<h2 style='color:gold'>💍 She Said YES 💍</h2><img src='./asma.jpg.jpeg' class='photo'>";
-  const message=document.createElement('p');
-  message.className='message';
-  msgContainer.appendChild(message);
-  typeEffect("💖 Asma & Rashid 💖\nAap dono hamesha isi tarah saath raho ✨🌹",0,message);
-  setInterval(()=>{createFirework(); floatHeart();},800);
-  msgContainer.scrollIntoView({behavior:'smooth'});
+const ring=document.createElement("div");
+ring.className="ring";
+ring.innerHTML="💍";
+document.body.appendChild(ring);
+setTimeout(()=>ring.remove(),2000);
+
+/* ROSE RAIN */
+setInterval(()=>{
+const rose=document.createElement("div");
+rose.className="rose";
+rose.innerHTML="🌹";
+rose.style.left=Math.random()*window.innerWidth+"px";
+document.body.appendChild(rose);
+
+setTimeout(()=>{
+rose.style.top=window.innerHeight+"px";
+},50);
+
+setTimeout(()=>rose.remove(),4000);
+
+},250);
+
+/* GIFT */
+setTimeout(()=>{
+document.getElementById("giftPopup").style.display="block";
+},7000);
 }
+
+/* VOICE */
+function playVoice(){
+document.getElementById("voiceMessage").play();
+}
+
+/* BIRTHDAY MODE */
+function checkBirthday(){
+let now=new Date();
+if(now.getDate()===17 && now.getMonth()===7){
+document.getElementById("birthdayMusic").play();
+document.body.classList.add("shake");
+alert("🎉 Happy Birthday Asma 🎉");
+}
+}
+checkBirthday();
+
 </script>
+
 </body>
 </html>
