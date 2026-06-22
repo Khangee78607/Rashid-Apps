@@ -110,13 +110,16 @@ button{padding:8px 20px;margin-top:15px;border:none;border-radius:20px;cursor:po
   transform: scale(1.03);
   box-shadow: 0 0 20px gold;
 }
+
+/* FIX: Original Video & Pic Aspect Ratio Style */
 .gallery-item {
   width: 100%;
-  height: 220px;
+  max-height: 450px;
   border-radius: 10px;
-  object-fit: cover;
-  background: black;
+  object-fit: contain; /* Video original size me rahegi, stretch/crop nahi hogi */
+  background: #000;
 }
+
 /* Download Button Styling */
 .download-btn {
   background: gold;
@@ -236,7 +239,7 @@ button{padding:8px 20px;margin-top:15px;border:none;border-radius:20px;cursor:po
         <a href="asma (2).png" download="asma (2).png" class="download-btn">Download Pic 📥</a>
       </div>
 
-      <!-- 📸 asma (3).JPG (Fixed Capital Extension) -->
+      <!-- 📸 asma (3).JPG -->
       <div class="gallery-card">
         <img src="asma (3).JPG" class="gallery-item" alt="Memory">
         <a href="asma (3).JPG" download="asma (3).JPG" class="download-btn">Download Pic 📥</a>
