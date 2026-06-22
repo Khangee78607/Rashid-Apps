@@ -42,9 +42,13 @@ button{padding:8px 20px;margin-top:15px;border:none;border-radius:20px;cursor:po
 .goal{background:rgba(255,215,0,0.1);padding:10px;border-radius:15px;border:1px solid gold;transition:0.3s;cursor:pointer;}
 .goal:hover{background:gold;color:black;transform:scale(1.05);box-shadow:0 0 15px gold;}
 
-/* Random Love Message */
-.random-message{margin-bottom:15px;font-size:18px;color:white;text-shadow:0 0 10px gold;min-height:25px;animation:heartBlink 1.5s infinite;}
-@keyframes heartBlink{0%{opacity:1;transform:scale(1);}50%{opacity:0.6;transform:scale(1.05);}100%{opacity:1;transform:scale(1);}}
+/* Timers Styling */
+.timer-section {
+  border-top: 1px dashed rgba(255, 215, 0, 0.4);
+  margin-top: 15px;
+  padding-top: 10px;
+  font-size: 14px;
+}
 
 .message{color:white;font-size:18px;text-shadow:0 0 10px gold;white-space:pre-wrap;margin-top:15px;}
 .photo{width:160px;height:160px;border-radius:50%;border:4px solid gold;box-shadow:0 0 20px gold;margin-top:20px;}
@@ -70,12 +74,25 @@ button{padding:8px 20px;margin-top:15px;border:none;border-radius:20px;cursor:po
 <div class="card">
 <h1>💖 Asma 💖</h1>
 <div id="randomLove" class="random-message"></div>
-<div class="counter" id="loveCounter"></div>
-<div class="counter" id="nextValentine" style="margin-top:5px;"></div>
+
+<!-- Total Time Together -->
+<div class="counter" id="loveCounter" style="margin-bottom: 15px;"></div>
+
+<!-- Wedding Countdown -->
+<div class="counter" id="weddingCounter" style="color: #ff4757; text-shadow: 0 0 10px #ff4757; margin-bottom: 15px;"></div>
+
+<!-- Timers Container -->
+<div class="timer-section">
+  <div id="nextRashidBirthday" style="margin-top:5px; color: #00d2d3;"></div>
+  <div id="nextAsmaBirthday" style="margin-top:5px; color: #54a0ff;"></div>
+  <div id="nextValentine" style="margin-top:5px; color: #ff9f43;"></div>
+</div>
 
 <div class="memories">
+<p>🎂 11 Dec 2002 – Rashid's Birthday 👑</p>
 <p>📅 14 Feb 2021 – First Day Together ❤️</p>
 <p>📅 17 Aug 2021 – First Birthday Together 🎂</p>
+<p>💍 11 Dec 2026 – Wedding Day 🎉</p>
 </div>
 
 <div class="future-goals-section">
@@ -146,7 +163,7 @@ function forgetPassword(){
   }
 }
 
-// ⏳ Love Counter
+// ⏳ Love Counter (Total Time Together)
 const startDate=new Date("February 14, 2021 00:00:00");
 function updateLoveTime(){
   const now=new Date();
@@ -159,23 +176,88 @@ function updateLoveTime(){
   const hours=Math.floor((diff/(1000*60*60))%24);
   const minutes=Math.floor((diff/(1000*60))%60);
   const seconds=Math.floor((diff/1000)%60);
-  document.getElementById("loveCounter").innerHTML=`${years}Y : ${months}M : ${days}D <br>${hours}H : ${minutes}M : ${seconds}S`;
+  document.getElementById("loveCounter").innerHTML=`Together Since:<br>${years}Y : ${months}M : ${days}D : ${hours}H : ${minutes}M : ${seconds}S`;
 }
 setInterval(updateLoveTime,1000);
 updateLoveTime();
 
-// ⏰ Next Valentine
-const nextValentine=new Date(`February 14, ${new Date().getFullYear()} 00:00:00`);
+// 💍 Shadi Ka Countdown (11 December 2026)
+const weddingDate = new Date("December 11, 2026 00:00:00");
+function updateWeddingCountdown(){
+  const now = new Date();
+  const diff = weddingDate - now;
+  
+  if (diff <= 0) {
+    document.getElementById("weddingCounter").innerHTML = "💍 It's Wedding Time! 🎉";
+    return;
+  }
+  
+  let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  let hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  let minutes = Math.floor((diff / (1000 * 60)) % 60);
+  let seconds = Math.floor((diff / 1000) % 60);
+  
+  document.getElementById("weddingCounter").innerHTML = `Wedding Countdown: <br>${days}D : ${hours}H : ${minutes}M : ${seconds}S`;
+}
+setInterval(updateWeddingCountdown, 1000);
+updateWeddingCountdown();
+
+// 👑 Next Rashid Birthday Countdown (December 11)
+function updateRashidBirthday(){
+  let now = new Date();
+  let currentYear = now.getFullYear();
+  let bday = new Date(`December 11, ${currentYear} 00:00:00`);
+  
+  if(now > bday){
+    bday.setFullYear(currentYear + 1);
+  }
+  
+  let diff = bday - now;
+  let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  let hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  let minutes = Math.floor((diff / (1000 * 60)) % 60);
+  let seconds = Math.floor((diff / 1000) % 60);
+  document.getElementById("nextRashidBirthday").innerHTML = `Rashid's Birthday: ${days}D : ${hours}H : ${minutes}M : ${seconds}S`;
+}
+setInterval(updateRashidBirthday,1000);
+updateRashidBirthday();
+
+// 🎂 Next Asma Birthday Countdown (August 17)
+function updateAsmaBirthday(){
+  let now = new Date();
+  let currentYear = now.getFullYear();
+  let bday = new Date(`August 17, ${currentYear} 00:00:00`);
+  
+  if(now > bday){
+    bday.setFullYear(currentYear + 1);
+  }
+  
+  let diff = bday - now;
+  let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  let hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  let minutes = Math.floor((diff / (1000 * 60)) % 60);
+  let seconds = Math.floor((diff / 1000) % 60);
+  document.getElementById("nextAsmaBirthday").innerHTML = `Asma's Birthday: ${days}D : ${hours}H : ${minutes}M : ${seconds}S`;
+}
+setInterval(updateAsmaBirthday,1000);
+updateAsmaBirthday();
+
+// ⏰ Next Valentine Countdown (February 14)
 function updateNextValentine(){
-  let now=new Date();let year=now.getFullYear();
-  if(now>new Date(`February 14, ${year} 00:00:00`)){year+=1;}
-  nextValentine.setFullYear(year);
-  let diff=nextValentine-now;
-  let days=Math.floor(diff/(1000*60*60*24));
-  let hours=Math.floor((diff/(1000*60*60))%24);
-  let minutes=Math.floor((diff/(1000*60))%60);
-  let seconds=Math.floor((diff/1000)%60);
-  document.getElementById("nextValentine").innerHTML=`Next Valentine's Day: ${days}D : ${hours}H : ${minutes}M : ${seconds}S`;
+  let now = new Date();
+  let currentYear = now.getFullYear();
+  let valentine = new Date(`February 14, ${currentYear} 00:00:00`);
+  
+  if(now > valentine){
+    valentine.setFullYear(currentYear + 1);
+  }
+  
+  let diff = valentine - now;
+  let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  let hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  let minutes = Math.floor((diff / (1000 * 60)) % 60);
+  let seconds = Math.floor((diff / 1000) % 60);
+  document.getElementById("nextValentine").innerHTML = `Next Valentine's Day: ${days}D : ${hours}H : ${minutes}M : ${seconds}S`;
 }
 setInterval(updateNextValentine,1000);
 updateNextValentine();
