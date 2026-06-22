@@ -13,7 +13,7 @@ body{background:black;color:#ffd700;text-align:center;overflow-y:auto;min-height
 @keyframes twinkle{from{opacity:0.2;}to{opacity:1;}}
 
 /* Card */
-.card{background:rgba(0,0,0,0.75);padding:30px;border-radius:20px;box-shadow:0 0 25px gold;width:90%;max-width:400px;margin-top:20px;position:relative;}
+.card{background:rgba(0,0,0,0.75);padding:30px;border-radius:20px;box-shadow:0 0 25px gold;width:90%;max-width:400px;margin-top:20px;position:relative;z-index:10;}
 h1{font-size:22px;margin-bottom:15px;animation:heartbeat 1.2s infinite;}
 @keyframes heartbeat{0%{transform:scale(1);}25%{transform:scale(1.1);}50%{transform:scale(1);}75%{transform:scale(1.1);}100%{transform:scale(1);}}
 .counter{font-size:18px;line-height:1.6;text-shadow:0 0 10px gold,0 0 20px orange;animation:glow 1.5s infinite alternate;}
@@ -27,7 +27,7 @@ button{padding:8px 20px;margin-top:15px;border:none;border-radius:20px;cursor:po
 #galleryBtn:hover {transform:scale(1.05);box-shadow:0 0 20px #ff4757;}
 
 /* Floating hearts */
-.heart{position:absolute;font-size:20px;animation:floatHeart 1.5s forwards;}
+.heart{position:absolute;font-size:20px;animation:floatHeart 1.5s forwards;z-index:100;}
 @keyframes floatHeart{0%{opacity:1;transform:translateY(0);}100%{opacity:0;transform:translateY(-80px) scale(1.5);}}
 
 /* Lock Screen */
@@ -54,6 +54,16 @@ button{padding:8px 20px;margin-top:15px;border:none;border-radius:20px;cursor:po
   font-size: 14px;
 }
 
+/* Age Section Styling */
+.age-section {
+  border-top: 1px dashed rgba(255, 215, 0, 0.4);
+  margin-top: 15px;
+  padding-top: 10px;
+  font-size: 13px;
+  text-align: left;
+  line-height: 1.5;
+}
+
 .message{color:white;font-size:18px;text-shadow:0 0 10px gold;white-space:pre-wrap;margin-top:15px;}
 .photo{width:160px;height:160px;border-radius:50%;border:4px solid gold;box-shadow:0 0 20px gold;margin-top:20px;}
 .memories, .future-goals-section, .yes-message-section{margin-top:20px;text-align:left;}
@@ -78,6 +88,7 @@ button{padding:8px 20px;margin-top:15px;border:none;border-radius:20px;cursor:po
   font-size: 24px;
   margin-bottom: 25px;
   text-shadow: 0 0 10px gold;
+  text-align: center;
 }
 .close-gallery {
   position: fixed;
@@ -111,13 +122,13 @@ button{padding:8px 20px;margin-top:15px;border:none;border-radius:20px;cursor:po
   box-shadow: 0 0 20px gold;
 }
 
-/* FIX: Original Video & Pic Aspect Ratio Style */
 .gallery-item {
   width: 100%;
   max-height: 450px;
   border-radius: 10px;
-  object-fit: contain; /* Video original size me rahegi, stretch/crop nahi hogi */
+  object-fit: contain;
   background: #000;
+  cursor: pointer;
 }
 
 /* Download Button Styling */
@@ -132,12 +143,71 @@ button{padding:8px 20px;margin-top:15px;border:none;border-radius:20px;cursor:po
   text-decoration: none;
   display: inline-block;
   font-weight: bold;
+  text-align: center;
   box-shadow: 0 0 5px gold;
 }
 .download-btn:hover {
   background: white;
   box-shadow: 0 0 15px white;
 }
+
+/* Lightbox Popup Custom Styling */
+.lightbox-modal {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 2000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+.lightbox-content-wrapper {
+  position: relative;
+  max-width: 90%;
+  max-height: 80%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lightbox-media {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+  transform: scale(1);
+}
+.lightbox-close {
+  position: absolute;
+  top: 20px; right: 20px;
+  background: #ff4757; color: white;
+  border: none; padding: 12px 20px;
+  border-radius: 20px; font-weight: bold;
+  cursor: pointer; font-size: 16px;
+  box-shadow: 0 0 10px #ff4757;
+}
+.zoom-controls {
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  gap: 15px;
+  z-index: 2001;
+}
+.zoom-btn {
+  background: gold;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 10px gold;
+}
+.zoom-btn:hover {
+  background: white;
+}
+canvas {position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;}
 </style>
 </head>
 <body>
@@ -157,13 +227,19 @@ button{padding:8px 20px;margin-top:15px;border:none;border-radius:20px;cursor:po
 <!-- Main Card -->
 <div class="card">
 <h1>💖 Asma 💖</h1>
-<div id="randomLove" class="random-message"></div>
+<div id="randomLove" class="random-message" style="margin-bottom: 10px; font-weight: bold;"></div>
 
 <!-- Total Time Together -->
 <div class="counter" id="loveCounter" style="margin-bottom: 15px;"></div>
 
 <!-- Wedding Countdown -->
 <div class="counter" id="weddingCounter" style="color: #ff4757; text-shadow: 0 0 10px #ff4757; margin-bottom: 15px;"></div>
+
+<!-- Live Exact Age Display Section -->
+<div class="age-section">
+  <div id="rashidAgeDisplay" style="color: #00d2d3; margin-bottom: 8px;"></div>
+  <div id="asmaAgeDisplay" style="color: #54a0ff;"></div>
+</div>
 
 <!-- Timers Container -->
 <div class="timer-section">
@@ -175,7 +251,7 @@ button{padding:8px 20px;margin-top:15px;border:none;border-radius:20px;cursor:po
 <div class="memories">
 <p>🎂 11 Dec 2002 – Rashid's Birthday 👑</p>
 <p>📅 14 Feb 2021 – First Day Together ❤️</p>
-<p>📅 17 Aug 2004 – Asma;s Birthday 🎂</p>
+<p>📅 17 Aug 2004 – Asma's Birthday 🎂</p>
 <p>💍 11 Dec 2026 – Wedding Day 🎉</p>
 </div>
 
@@ -209,9 +285,12 @@ button{padding:8px 20px;margin-top:15px;border:none;border-radius:20px;cursor:po
         <a href="asma (1).jpg" download="asma (1).jpg" class="download-btn">Download Pic 📥</a>
       </div>
 
-      <!-- 🎥 asma (1).mp4 -->
+      <!-- 🎥 asma (1).mp4 (Fixed iOS & Android Compatibility) -->
       <div class="gallery-card">
-        <video src="asma (1).mp4" class="gallery-item" controls></video>
+        <video class="gallery-item" controls playsinline preload="auto">
+          <source src="asma (1).mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
         <a href="asma (1).mp4" download="asma (1).mp4" class="download-btn">Download Video 📥</a>
       </div>
 
@@ -227,9 +306,11 @@ button{padding:8px 20px;margin-top:15px;border:none;border-radius:20px;cursor:po
         <a href="asma (2).jpg" download="asma (2).jpg" class="download-btn">Download Pic 📥</a>
       </div>
 
-      <!-- 🎥 asma (2).mp4 -->
+      <!-- 🎥 asma (2).mp4 (Fixed iOS & Android Compatibility) -->
       <div class="gallery-card">
-        <video src="asma (2).mp4" class="gallery-item" controls></video>
+        <video class="gallery-item" controls playsinline preload="auto">
+          <source src="asma (2).mp4" type="video/mp4">
+        </video>
         <a href="asma (2).mp4" download="asma (2).mp4" class="download-btn">Download Video 📥</a>
       </div>
 
@@ -239,15 +320,17 @@ button{padding:8px 20px;margin-top:15px;border:none;border-radius:20px;cursor:po
         <a href="asma (2).png" download="asma (2).png" class="download-btn">Download Pic 📥</a>
       </div>
 
-      <!-- 📸 asma (3).JPG -->
+      <!-- 📸 asma (3).jpg (Standardized lowercase extension) -->
       <div class="gallery-card">
-        <img src="asma (3).JPG" class="gallery-item" alt="Memory">
-        <a href="asma (3).JPG" download="asma (3).JPG" class="download-btn">Download Pic 📥</a>
+        <img src="asma (3).jpg" class="gallery-item" alt="Memory">
+        <a href="asma (3).jpg" download="asma (3).jpg" class="download-btn">Download Pic 📥</a>
       </div>
 
-      <!-- 🎥 asma (3).mp4 -->
+      <!-- 🎥 asma (3).mp4 (Fixed iOS & Android Compatibility) -->
       <div class="gallery-card">
-        <video src="asma (3).mp4" class="gallery-item" controls></video>
+        <video class="gallery-item" controls playsinline preload="auto">
+          <source src="asma (3).mp4" type="video/mp4">
+        </video>
         <a href="asma (3).mp4" download="asma (3).mp4" class="download-btn">Download Video 📥</a>
       </div>
 
@@ -357,13 +440,26 @@ button{padding:8px 20px;margin-top:15px;border:none;border-radius:20px;cursor:po
   </div>
 </div>
 
+<!-- Lightbox Popup Dynamic Element -->
+<div id="lightboxModal" class="lightbox-modal">
+  <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
+  <div class="lightbox-content-wrapper">
+    <div id="lightboxTarget"></div>
+  </div>
+  <div class="zoom-controls">
+    <button class="zoom-btn" onclick="zoomMedia(0.2)">🔍 Zoom +</button>
+    <button class="zoom-btn" onclick="zoomMedia(-0.2)">🔍 Zoom -</button>
+    <button class="zoom-btn" onclick="resetZoom()">🔄 Reset</button>
+  </div>
+</div>
+
 <canvas id="canvas"></canvas>
 <audio id="bgMusic" loop>
   <source src="romantic.mp3.mp3" type="audio/mp3">
 </audio>
 
 <script>
-// 🌟 Stars
+// 🌟 Stars Generator
 for(let i=0;i<150;i++){
   let star=document.createElement("div");
   star.className="star";
@@ -375,7 +471,7 @@ for(let i=0;i<150;i++){
 const starColors=["white","gold","pink","cyan","orange"];
 setInterval(()=>{document.querySelectorAll(".star").forEach(star=>{star.style.background=starColors[Math.floor(Math.random()*starColors.length)];});},2000);
 
-// 🔒 Lock Screen
+// 🔒 Lock Screen System
 let attempts=0;
 let password="RA";
 function checkPassword(){
@@ -384,7 +480,7 @@ function checkPassword(){
   const errorMsg=document.getElementById("errorMsg");
   if(input===password){
     lockScreen.style.display="none";
-    document.getElementById("bgMusic").play();
+    document.getElementById("bgMusic").play().catch(e => console.log("Audio autoplay protected"));
     for(let i=0;i<30;i++){
       const heart=document.createElement("div");
       heart.className="heart";
@@ -412,7 +508,7 @@ function forgetPassword(){
   }
 }
 
-// ⏳ Love Counter (Total Time Together)
+// ⏳ Relationship Counter (Since 14 Feb 2021)
 const startDate=new Date("February 14, 2021 00:00:00");
 function updateLoveTime(){
   const now=new Date();
@@ -430,37 +526,68 @@ function updateLoveTime(){
 setInterval(updateLoveTime,1000);
 updateLoveTime();
 
-// 💍 Shadi Ka Countdown (11 December 2026)
+// 💍 Wedding Countdown (11 December 2026)
 const weddingDate = new Date("December 11, 2026 00:00:00");
 function updateWeddingCountdown(){
   const now = new Date();
   const diff = weddingDate - now;
-  
   if (diff <= 0) {
     document.getElementById("weddingCounter").innerHTML = "💍 It's Wedding Time! 🎉";
     return;
   }
-  
   let days = Math.floor(diff / (1000 * 60 * 60 * 24));
   let hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
   let minutes = Math.floor((diff / (1000 * 60)) % 60);
   let seconds = Math.floor((diff / 1000) % 60);
-  
   document.getElementById("weddingCounter").innerHTML = `Wedding Countdown: <br>${days}D : ${hours}H : ${minutes}M : ${seconds}S`;
 }
 setInterval(updateWeddingCountdown, 1000);
 updateWeddingCountdown();
+
+// 🕒 Function to calculate precise detailed Age
+function calculatePreciseAge(birthDateString) {
+  const now = new Date();
+  const birthDate = new Date(birthDateString);
+  
+  let totalMs = now - birthDate;
+  
+  let years = now.getFullYear() - birthDate.getFullYear();
+  let months = now.getMonth() - birthDate.getMonth();
+  let days = now.getDate() - birthDate.getDate();
+  
+  if (days < 0) {
+    months--;
+    days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+  }
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+  
+  let totalWeeks = Math.floor(totalMs / (1000 * 60 * 60 * 24 * 7));
+  let hours = Math.floor((totalMs / (1000 * 60 * 60)) % 24);
+  let minutes = Math.floor((totalMs / (1000 * 60)) % 60);
+  let seconds = Math.floor((totalMs / 1000) % 60);
+  
+  return `${years}Y : ${months}M : ${totalWeeks}W : ${days}D : ${hours}H : ${seconds}S`;
+}
+
+// Live Age Updater Function
+function updateLiveAges() {
+  // Rashid Birthday: Dec 11, 2002
+  document.getElementById("rashidAgeDisplay").innerHTML = `👑 Rashid Age:<br>${calculatePreciseAge("December 11, 2002 00:00:00")}`;
+  // Asma Birthday: Aug 17, 2004
+  document.getElementById("asmaAgeDisplay").innerHTML = `🎀 Asma Age:<br>${calculatePreciseAge("August 17, 2004 00:00:00")}`;
+}
+setInterval(updateLiveAges, 1000);
+updateLiveAges();
 
 // 👑 Next Rashid Birthday Countdown (December 11)
 function updateRashidBirthday(){
   let now = new Date();
   let currentYear = now.getFullYear();
   let bday = new Date(`December 11, ${currentYear} 00:00:00`);
-  
-  if(now > bday){
-    bday.setFullYear(currentYear + 1);
-  }
-  
+  if(now > bday){ bday.setFullYear(currentYear + 1); }
   let diff = bday - now;
   let days = Math.floor(diff / (1000 * 60 * 60 * 24));
   let hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
@@ -476,11 +603,7 @@ function updateAsmaBirthday(){
   let now = new Date();
   let currentYear = now.getFullYear();
   let bday = new Date(`August 17, ${currentYear} 00:00:00`);
-  
-  if(now > bday){
-    bday.setFullYear(currentYear + 1);
-  }
-  
+  if(now > bday){ bday.setFullYear(currentYear + 1); }
   let diff = bday - now;
   let days = Math.floor(diff / (1000 * 60 * 60 * 24));
   let hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
@@ -496,11 +619,7 @@ function updateNextValentine(){
   let now = new Date();
   let currentYear = now.getFullYear();
   let valentine = new Date(`February 14, ${currentYear} 00:00:00`);
-  
-  if(now > valentine){
-    valentine.setFullYear(currentYear + 1);
-  }
-  
+  if(now > valentine){ valentine.setFullYear(currentYear + 1); }
   let diff = valentine - now;
   let days = Math.floor(diff / (1000 * 60 * 60 * 24));
   let hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
@@ -520,20 +639,46 @@ function changeMessage(){messageContainer.innerHTML="";typeEffect(loveMessages[m
 changeMessage();
 setInterval(changeMessage,5000);
 
-// ❌ No button move
+// ❌ No button move mechanics
 function moveNo(){let btn=document.getElementById("no");btn.style.left=Math.random()*300+"px";btn.style.top=Math.random()*300+"px";}
 
-// 🎆 Fireworks + Hearts + Confetti
+// 🎆 Fireworks System
 const canvas=document.getElementById("canvas");
 const ctx=canvas.getContext("2d");
 canvas.width=window.innerWidth;canvas.height=window.innerHeight;
 let particles=[];
-function createFirework(){for(let i=0;i<50;i++){particles.push({x:canvas.width/2,y:canvas.height/2,angle:Math.random()*2*Math.PI,speed:Math.random()*6+2,color:"gold",type:"firework"});}
-for(let i=0;i<20;i++){particles.push({x:canvas.width/2,y:canvas.height/2,angle:Math.random()*2*Math.PI,speed:Math.random()*2+1,color:"pink",type:"heart"});}
-for(let i=0;i<30;i++){particles.push({x:Math.random()*canvas.width,y:0,angle:Math.random()*2*Math.PI,speed:Math.random()*3+2,color:["red","blue","green","yellow","orange"][Math.floor(Math.random()*5)],type:"confetti"});}}
-function animate(){ctx.fillStyle="rgba(0,0,0,0.2)";ctx.fillRect(0,0,canvas.width,canvas.height);particles.forEach((p,i)=>{p.x+=Math.cos(p.angle)*p.speed;p.y+=Math.sin(p.angle)*p.speed;p.speed*=0.95;ctx.beginPath();ctx.arc(p.x,p.y,p.type==="confetti"?3:2,0,2*Math.PI);ctx.fillStyle=p.color;ctx.fill();if(p.speed<0.5)particles.splice(i,1);});requestAnimationFrame(animate);}
+function createFirework(){
+  for(let i=0;i<50;i++){particles.push({x:canvas.width/2,y:canvas.height/2,angle:Math.random()*2*Math.PI,speed:Math.random()*6+2,color:"gold",type:"firework"});}
+  for(let i=0;i<20;i++){particles.push({x:canvas.width/2,y:canvas.height/2,angle:Math.random()*2*Math.PI,speed:Math.random()*2+1,color:"pink",type:"heart"});}
+  for(let i=0;i<30;i++){particles.push({x:Math.random()*canvas.width,y:0,angle:Math.random()*2*Math.PI,speed:Math.random()*3+2,color:["red","blue","green","yellow","orange"][Math.floor(Math.random()*5)],type:"confetti"});}
+}
+function animate(){
+  ctx.fillStyle="rgba(0,0,0,0.2)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  particles.forEach((p,i)=>{
+    p.x+=Math.cos(p.angle)*p.speed;
+    p.y+=Math.sin(p.angle)*p.speed;
+    p.speed*=0.95;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.type==="confetti"?3:2,0,2*Math.PI);
+    ctx.fillStyle=p.color;
+    ctx.fill();
+    if(p.speed<0.5)particles.splice(i,1);
+  });
+  requestAnimationFrame(animate);
+}
 animate();
-function floatHeart(){const heart=document.createElement("div");heart.className="heart";heart.style.left=(canvas.width/2 + (Math.random()*100-50))+"px";heart.style.top=(canvas.height/2 + 50)+"px";heart.innerHTML="💖";document.body.appendChild(heart);setTimeout(()=>heart.remove(),1500);}
+
+function floatHeart(){
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.style.left=(canvas.width/2 + (Math.random()*100-50))+"px";
+  heart.style.top=(canvas.height/2 + 50)+"px";
+  heart.innerHTML="💖";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),1500);
+}
+
 function startCelebration(){
   const msgContainer=document.getElementById("yesMessage");
   msgContainer.innerHTML="<h2 style='color:gold'>💍 She Said YES 💍</h2><img src='asma.jpg.jpeg' class='photo'>";
@@ -545,13 +690,67 @@ function startCelebration(){
   msgContainer.scrollIntoView({behavior:'smooth'});
 }
 
-// Function to Open/Close Gallery Overlay
+// Open/Close Gallery Overlay Configuration
 function toggleGallery(show) {
   const overlay = document.getElementById("galleryOverlay");
-  if(show) {
-    overlay.style.display = "block";
-  } else {
-    overlay.style.display = "none";
+  if(show) { overlay.style.display = "block"; } 
+  else { overlay.style.display = "none"; }
+}
+
+// --- Lightbox with Zoom Engine ---
+let currentZoom = 1;
+document.addEventListener("DOMContentLoaded", () => {
+  // Bind dynamic opening clicks to all gallery grid items
+  document.body.addEventListener("click", (e) => {
+    if(e.target.classList.contains("gallery-item")) {
+      openLightbox(e.target);
+    }
+  });
+});
+
+function openLightbox(mediaElement) {
+  const modal = document.getElementById("lightboxModal");
+  const target = document.getElementById("lightboxTarget");
+  target.innerHTML = "";
+  currentZoom = 1;
+  
+  const clone = mediaElement.cloneNode(true);
+  clone.className = "lightbox-media";
+  clone.style.transform = `scale(${currentZoom})`;
+  
+  if(clone.tagName === "VIDEO") {
+    clone.setAttribute("controls", "true");
+    clone.style.maxHeight = "75vh";
+    // Force play handler for active lightbox view
+    setTimeout(() => { clone.play().catch(err => console.log("Playback prevented")); }, 100);
+  }
+  target.appendChild(clone);
+  modal.style.display = "flex";
+}
+
+function closeLightbox() {
+  const modal = document.getElementById("lightboxModal");
+  const target = document.getElementById("lightboxTarget");
+  const video = target.querySelector("video");
+  if(video) video.pause();
+  modal.style.display = "none";
+}
+
+function zoomMedia(amount) {
+  const media = document.querySelector(".lightbox-media");
+  if(media) {
+    currentZoom += amount;
+    if(currentZoom < 0.5) currentZoom = 0.5;
+    if(currentZoom > 4) currentZoom = 4;
+    media.style.transform = `scale(${currentZoom})`;
+  }
+}
+
+function resetZoom() {
+  const media = document.querySelector(".lightbox-media");
+  if(media) {
+    currentZoom = 1;
+    media.style.transform = `scale(${currentZoom})`;
   }
 }
 </script>
